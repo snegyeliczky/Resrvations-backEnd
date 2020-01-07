@@ -1,6 +1,7 @@
 package com.codecool.reservationsbackend.service;
 
 import com.codecool.reservationsbackend.model.Guest;
+import com.codecool.reservationsbackend.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class GuestCreator {
     @Autowired
     private RandomDateCreator randomDateCreator;
 
-    public Guest creatRandomGuest(){
+    public Guest createRandomGuest(){
         Guest guest = new Guest();
         Random random = new Random();
 
@@ -26,7 +27,8 @@ public class GuestCreator {
         guest.setCheckOut(dates.get(1));
         String name = names.get(random.nextInt(names.size()));
         guest.setName(name);
-
+        guest.setEmail(name+"@gmail.com");
+        guest.setStatus(Status.CHECKIN);
 
         return guest;
     }
