@@ -15,11 +15,17 @@ public class GuestCreator {
     private static List<String> names= Arrays.asList("Joco","Misi","Béla","Füles","Réka","Ákos","Ürsiklosi","Sándi");
 
     @Autowired
-    private LocalDate dateCreator;
+    private RandomDateCreator randomDateCreator;
 
     public Guest creatRandomGuest(){
         Guest guest = new Guest();
         Random random = new Random();
+
+        List<LocalDate> dates = randomDateCreator.dateCreator();
+        guest.setCheckIn(dates.get(0));
+        guest.setCheckOut(dates.get(1));
+        String name = names.get(random.nextInt(names.size()));
+        guest.setName(name);
 
 
         return guest;
