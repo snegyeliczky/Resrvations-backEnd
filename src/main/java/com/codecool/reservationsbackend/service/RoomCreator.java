@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RoomCreator {
 
-    public Room roomCreator() {
+    public Room createRoom() {
         Room room = new Room();
         return room;
     }
