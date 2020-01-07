@@ -2,9 +2,11 @@ package com.codecool.reservationsbackend.model;
 
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 public class Guest {
 
+    private UUID id = UUID.randomUUID();
     private Room room;
     private String name;
     private Status status;
@@ -13,6 +15,14 @@ public class Guest {
     private String email;
 
     public Guest() {
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public Room getRoom() {
