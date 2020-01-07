@@ -29,8 +29,11 @@ public class ReservationsBackendApplication {
     @PostConstruct
     public void afterInit(){
         Guest guest =guestCreator.creatRandomGuest();
+        Guest guest2 =guestCreator.creatRandomGuest();
         LOGGER.info(guest.getCheckIn().toString());
         LOGGER.info(guest.getCheckOut().toString());
+        LOGGER.info(guest2.getCheckIn().toString()+" -2");
+        LOGGER.info(guest2.getCheckOut().toString()+ " -2");
     }
 
 
