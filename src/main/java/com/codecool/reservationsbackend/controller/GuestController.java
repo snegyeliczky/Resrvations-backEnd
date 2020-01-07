@@ -1,6 +1,10 @@
 package com.codecool.reservationsbackend.controller;
 
 import com.codecool.reservationsbackend.model.Guest;
+import com.codecool.reservationsbackend.model.Status;
+import com.codecool.reservationsbackend.service.GuestStorage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,26 +15,27 @@ import java.util.List;
 @RequestMapping("/guest")
 public class GuestController {
 
+    @Autowired
+    private GuestStorage guestStorage;
 
-
-    @PostMapping("/checkin")
+    @GetMapping("/checkin")
     public List<Guest> checkInList() {
-        return null;
+        return guestStorage.getGuestListByStatus(Status.CHECKIN);
     }
 
-    @PostMapping("/in")
+    @GetMapping("/in")
     public List<Guest> inList() {
-        return null;
+        return guestStorage.getGuestListByStatus(Status.IN);
     }
 
-    @PostMapping("/checkout")
+    @GetMapping("/checkout")
     public List<Guest> checkoutList() {
-        return null;
+        return guestStorage.getGuestListByStatus(Status.CHECKOUT);
     }
 
-    @PostMapping("/out")
+    @GetMapping("/out")
     public List<Guest> outList() {
-        return null;
+        return guestStorage.getGuestListByStatus(Status.OUT);
     }
 
 }
