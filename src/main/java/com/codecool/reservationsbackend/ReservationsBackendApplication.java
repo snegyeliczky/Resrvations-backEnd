@@ -3,6 +3,7 @@ package com.codecool.reservationsbackend;
 import com.codecool.reservationsbackend.model.Guest;
 import com.codecool.reservationsbackend.service.GuestCreator;
 import com.codecool.reservationsbackend.service.RoomCreator;
+import com.codecool.reservationsbackend.service.RoomStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class ReservationsBackendApplication {
     private GuestCreator guestCreator;
 
     @Autowired
-    private RoomCreator roomCreator;
+    private RoomStorage roomStorage;
 
     public static void main(String[] args) {
         SpringApplication.run(ReservationsBackendApplication.class, args);
@@ -35,6 +36,9 @@ public class ReservationsBackendApplication {
         LOGGER.info(guest.getCheckOut().toString());
         LOGGER.info(guest2.getCheckIn().toString()+" -2");
         LOGGER.info(guest2.getCheckOut().toString()+ " -2");
+        for (int i = 0; i < 10; i++) {
+            roomStorage.addRoom();
+        }
     }
 
 }
