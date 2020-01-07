@@ -1,14 +1,17 @@
 package com.codecool.reservationsbackend.model;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Room {
 
-    private int number;
+    private static AtomicInteger at = new AtomicInteger();
+    private int roomNumber;
 
-    public Room(int number) {
-        this.number = number;
+    public Room() {
+        this.roomNumber = at.getAndIncrement();
     }
 
-    public int getNumber() {
-        return number;
+    public int getRoomNumber() {
+        return roomNumber;
     }
 }
