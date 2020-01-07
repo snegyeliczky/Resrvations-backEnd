@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin
 @RestController
 public class RouteController {
 
@@ -18,7 +18,6 @@ public class RouteController {
 
     @GetMapping("/")
     public List<Guest> mainPage() {
-
         return guestStorage.getGuestList();
     }
 }
