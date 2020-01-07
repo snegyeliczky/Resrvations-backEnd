@@ -15,7 +15,7 @@ public class RandomDateCreator {
         long minDay = LocalDate.now().toEpochDay();
         long maxDay = LocalDate.of(2022, 12, 31).toEpochDay();
         long randomDay = ThreadLocalRandom.current().nextLong(minDay, maxDay);
-        long checkOut = ThreadLocalRandom.current().nextLong(randomDay,randomDay+15);
+        long checkOut = ThreadLocalRandom.current().nextLong(randomDay+1,randomDay+15);
 
         LocalDate arriveingDate = LocalDate.ofEpochDay(randomDay);
         LocalDate checkoutDate = LocalDate.ofEpochDay(checkOut);
