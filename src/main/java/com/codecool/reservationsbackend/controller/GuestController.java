@@ -4,11 +4,9 @@ import com.codecool.reservationsbackend.model.Guest;
 import com.codecool.reservationsbackend.model.Status;
 import com.codecool.reservationsbackend.service.GuestStorage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -19,23 +17,31 @@ public class GuestController {
     private GuestStorage guestStorage;
 
     @GetMapping("/checkin")
-    public List<Guest> checkInList() {
-        return guestStorage.getGuestListByStatus(Status.CHECKIN);
+    @ResponseBody
+    public List<Guest> checkInList(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return guestStorage.getGuestListByStatus(Status.CHECKIN, localDate);
     }
 
     @GetMapping("/in")
-    public List<Guest> inList() {
-        return guestStorage.getGuestListByStatus(Status.IN);
+    @ResponseBody
+    public List<Guest> inList(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return guestStorage.getGuestListByStatus(Status.IN, localDate);
     }
 
     @GetMapping("/checkout")
-    public List<Guest> checkoutList() {
-        return guestStorage.getGuestListByStatus(Status.CHECKOUT);
+    @ResponseBody
+    public List<Guest> checkoutList(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return guestStorage.getGuestListByStatus(Status.CHECKOUT, localDate);
     }
 
     @GetMapping("/out")
-    public List<Guest> outList() {
-        return guestStorage.getGuestListByStatus(Status.OUT);
+    @ResponseBody
+    public List<Guest> outList(@RequestParam String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return guestStorage.getGuestListByStatus(Status.OUT, localDate);
     }
 
 }
