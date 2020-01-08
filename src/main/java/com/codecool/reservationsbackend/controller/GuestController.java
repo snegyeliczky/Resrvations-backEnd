@@ -29,24 +29,31 @@ public class GuestController {
     }
 
     @GetMapping("/in")
-    public List<Guest> inList() {
+    public List<Guest> inList(@RequestParam(value = "date", required = false) String date) {
+        if (StringUtils.isEmpty(date)){
         return guestStorage.getGuestListByStatus(Status.IN);
     }
-
-    @GetMapping("/checkout")
-    public List<Guest> checkoutList() {
-        return guestStorage.getGuestListByStatus(Status.CHECKOUT);
+        LocalDate localDate = LocalDate.parse(date);
+        return guestStorage.getGuestListByStatusAndDate(Status.IN, localDate);
     }
 
-    @GetMapping("/checkout/{date}")
-    public List<Guest> outListByDate(@PathVariable("date") String date) {
+
+    @GetMapping("/checkout")
+    public List<Guest> outListByDate(@RequestParam(value = "date", required = false) String date) {
+        if (StringUtils.isEmpty(date)){
+            return guestStorage.getGuestListByStatus(Status.CHECKIN);
+        }
         LocalDate localDate = LocalDate.parse(date);
         return guestStorage.getGuestListByStatusAndDate(Status.CHECKOUT,localDate);
     }
 
     @GetMapping("/out")
-    public List<Guest> outList() {
-        return guestStorage.getGuestListByStatus(Status.OUT);
+    public List<Guest> outList(@RequestParam(value = "date", required = false) String date) {
+        if (StringUtils.isEmpty(date)){
+            return guestStorage.getGuestListByStatus(Status.OUT);
+        }
+        LocalDate localDate = LocalDate.parse(date);
+        return guestStorage.getGuestListByStatusAndDate(Status.OUT,localDate);
     }
 
 

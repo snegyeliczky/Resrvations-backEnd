@@ -28,7 +28,7 @@ public class GuestCreator {
         String name = names.get(random.nextInt(names.size()));
         guest.setName(name);
         guest.setEmail(name+"@gmail.com");
-        guest.setStatus(Status.CHECKIN);
+        guest.setStatus(Status.IN);
 
         return guest;
     }
