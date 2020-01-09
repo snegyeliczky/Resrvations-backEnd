@@ -59,8 +59,8 @@ public class GuestController {
         return guestStorage.getGuestListByGuestId(id);
     }
 
-    @PostMapping("/setroom")
-    public List<Guest> setRoom() {
-        return null;
+    @GetMapping("/setroom")
+    public List<Guest> setRoom(@RequestParam(value = "roomId") String roomNumber, @RequestParam(value = "guestId") String guestId) {
+        return guestStorage.getGuestList();
     }
 }
