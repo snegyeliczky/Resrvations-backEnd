@@ -48,14 +48,6 @@ public class GuestController {
         return guestStorage.getGuestListByStatusAndDate(Status.CHECKOUT,localDate);
     }
 
-    @GetMapping("/out")
-    public List<Guest> outList(@RequestParam(value = "date", required = false) String date) {
-        if (StringUtils.isEmpty(date)){
-            return guestStorage.getGuestListByStatus(Status.OUT);
-        }
-        LocalDate localDate = LocalDate.parse(date);
-        return guestStorage.getGuestListByStatusAndDate(Status.OUT,localDate);
-    }
 
     @PutMapping("/changestatus/{id}/{status}")
     public List<Guest> changeGuestStatus(@PathVariable UUID id, @PathVariable Status status) {
