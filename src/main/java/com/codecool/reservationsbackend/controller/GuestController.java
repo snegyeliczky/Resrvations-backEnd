@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -56,6 +57,8 @@ public class GuestController {
         return guestStorage.getGuestListByStatusAndDate(Status.OUT,localDate);
     }
 
-
-
+    @PutMapping("/changestatus/{id}/{status}")
+    public List<Guest> changeGuestStatus(@PathVariable UUID id, @PathVariable Status status) {
+        return guestStorage.changeGuestStatus(id, status);
+    }
 }
