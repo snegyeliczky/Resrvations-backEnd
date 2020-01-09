@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +49,15 @@ public class GuestStorage {
     }
 
     public List<Guest> getGuestList() {
+        return guestList;
+    }
+
+    public List<Guest> changeGuestStatus(UUID id, Status status) {
+        for (Guest guest : guestList) {
+            if (id.equals(guest.getId())) {
+                guest.setStatus(status);
+            }
+        }
         return guestList;
     }
 }
