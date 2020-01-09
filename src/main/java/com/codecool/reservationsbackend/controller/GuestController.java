@@ -49,8 +49,8 @@ public class GuestController {
     }
 
 
-    @PutMapping("/changestatus/{id}/{status}")
-    public List<Guest> changeGuestStatus(@PathVariable UUID id, @PathVariable Status status) {
-        return guestStorage.changeGuestStatus(id, status);
+    @GetMapping("/changestatus")
+    public List<Guest> changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
+        return guestStorage.changeGuestStatus(UUID.fromString(id), Status.valueOf(status));
     }
 }
