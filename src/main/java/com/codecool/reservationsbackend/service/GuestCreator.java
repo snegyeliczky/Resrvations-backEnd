@@ -14,7 +14,6 @@ import java.util.Random;
 public class GuestCreator {
 
     private static List<String> names= Arrays.asList("Joco","Misi","Béla","Füles","Réka","Ákos","Ürsiklosi","Sándi");
-
     @Autowired
     private RandomDateCreator randomDateCreator;
 
@@ -28,7 +27,7 @@ public class GuestCreator {
         String name = names.get(random.nextInt(names.size()));
         guest.setName(name);
         guest.setEmail(name+"@gmail.com");
-        guest.setStatus(Status.IN);
+        guest.setStatus(Status.values()[random.nextInt(Status.values().length)]);
 
         return guest;
     }
