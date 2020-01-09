@@ -36,7 +36,7 @@ public class ReservationsBackendApplication {
         LOGGER.info(guest.getCheckOut().toString());
         LOGGER.info(guest2.getCheckIn().toString()+" -2");
         LOGGER.info(guest2.getCheckOut().toString()+ " -2");
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             roomStorage.addRoom();
         }
     }

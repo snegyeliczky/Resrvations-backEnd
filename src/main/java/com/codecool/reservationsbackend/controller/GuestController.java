@@ -61,4 +61,14 @@ public class GuestController {
     public List<Guest> changeGuestStatus(@PathVariable UUID id, @PathVariable Status status) {
         return guestStorage.changeGuestStatus(id, status);
     }
+
+    @GetMapping("/search/{id}")
+    public List<Guest> getGuest(@PathVariable UUID id) {
+        return guestStorage.getGuestListByGuestId(id);
+    }
+
+    @PostMapping("/setroom")
+    public List<Guest> setRoom() {
+        return null;
+    }
 }

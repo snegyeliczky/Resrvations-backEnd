@@ -62,6 +62,14 @@ public class GuestStorage {
         return guestList;
     }
 
+    public List<Guest> getGuestListByGuestId(UUID id) {
+        return guestList.stream()
+                .filter(guest -> guest.getId().equals(id))
+                .collect(Collectors.toList());
+    }
+
+
+
     public List<Guest> changeGuestStatus(UUID id, Status status) {
         for (Guest guest : guestList) {
             if (id.equals(guest.getId())) {
