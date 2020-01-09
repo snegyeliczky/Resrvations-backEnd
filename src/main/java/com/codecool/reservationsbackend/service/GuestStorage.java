@@ -41,11 +41,6 @@ public class GuestStorage {
                         .filter(guest -> guest.getStatus().equals(Status.IN))
                         .filter(guest -> guest.getCheckIn().isBefore(date) && guest.getCheckOut().isAfter(date))
                         .collect(Collectors.toList());
-            case OUT:
-                return guestList.stream()
-                        .filter(guest -> guest.getStatus().equals(Status.OUT))
-                        .filter(guest -> guest.getCheckIn().isBefore(date) && guest.getCheckOut().isAfter(date))
-                        .collect(Collectors.toList());
             default:
                 return guestList.stream()
                         .filter(guest -> guest.getStatus().equals(status))
