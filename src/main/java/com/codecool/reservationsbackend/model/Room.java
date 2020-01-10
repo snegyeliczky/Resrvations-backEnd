@@ -12,7 +12,8 @@ public class Room {
     public Room() {
         this.roomNumber = at.getAndIncrement();
         this.guest = new Guest();
-        guest.setName("Rettenet");
+        guest.setName("Bela");
+        reserved = roomNumber % 3 == 0;
     }
 
     public int getRoomNumber() {
