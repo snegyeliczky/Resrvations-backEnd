@@ -2,6 +2,7 @@ package com.codecool.reservationsbackend.controller;
 
 import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.entity.Status;
+import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.service.GuestStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;

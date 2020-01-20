@@ -1,6 +1,8 @@
 package com.codecool.reservationsbackend;
 
 import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Status;
+import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.service.GuestCreator;
 import com.codecool.reservationsbackend.service.RoomCreator;
 import com.codecool.reservationsbackend.service.RoomStorage;
@@ -34,7 +36,7 @@ public class ReservationsBackendApplication {
     public CommandLineRunner afterInit(){
 
         return args -> {
-            GuestDB bela1 =  GuestDB.builder().checkIn(LocalDate.of(2010,2,10))
+            Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
                     .checkOut(LocalDate.of(2010,2,15))
                     .name("Béca")
                     .email("bela@bela.com")
