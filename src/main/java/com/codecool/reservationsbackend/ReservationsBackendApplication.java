@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
+import javax.annotation.PostConstruct;
 
 @SpringBootApplication
 public class ReservationsBackendApplication {
@@ -27,5 +28,19 @@ public class ReservationsBackendApplication {
 
         };
     }
+    /*@Bean
+    @Profile("production")
+    public void afterInit(){
+        Guest guest =guestCreator.createRandomGuest();
+        Guest guest2 =guestCreator.createRandomGuest();
+        LOGGER.info(guest.getCheckIn().toString());
+        LOGGER.info(guest.getCheckOut().toString());
+        LOGGER.info(guest2.getCheckIn().toString()+" -2");
+        LOGGER.info(guest2.getCheckOut().toString()+ " -2");
+        for (int i = 0; i < 10; i++) {
+            roomStorage.addRoom();
+        }
+    }
 
+     */
 }
