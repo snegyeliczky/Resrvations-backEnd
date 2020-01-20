@@ -2,6 +2,7 @@ package com.codecool.reservationsbackend.controller;
 
 
 import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.service.GuestCreator;
 import com.codecool.reservationsbackend.service.GuestStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,12 @@ public class AddController {
     private GuestCreator guestCreator;
 
     @Autowired
-    private GuestStorage guestStorage;
+    private GuestRepository guestRepository;
 
     @GetMapping("/guest")
     public Guest createRandomGuest() {
         Guest guest = guestCreator.createRandomGuest();
-        guestStorage.addGuestToList(guest);
+        guestRepository.save(guest);
         return guest;
     }
 
