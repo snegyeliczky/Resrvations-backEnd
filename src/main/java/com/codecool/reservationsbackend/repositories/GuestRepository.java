@@ -8,6 +8,5 @@ import java.util.List;
 
 public interface GuestRepository extends JpaRepository<Guest, Long> {
 
-    List<Guest> findByCheckIn(LocalDate date);
-
+    List<Guest> findByCheckInEquals(LocalDate date);
 }

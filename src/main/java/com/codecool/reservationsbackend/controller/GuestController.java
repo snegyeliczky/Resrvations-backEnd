@@ -19,17 +19,18 @@ public class GuestController {
     @Autowired
     private GuestStorage guestStorage;
 
+    @Autowired
+    private GuestRepository guestRepository;
+
 
     @GetMapping("/checkin")
     public List<Guest> checkInList(
             @RequestParam(value = "date", required = false) String date) {
         if (StringUtils.isEmpty(date)) {
-            return guestStorage
-                    .getGuestListByStatus(Status.CHECKIN);
+            return guestRepository.findAll();
         }
         LocalDate localDate = LocalDate.parse(date);
-        return guestStorage
-                .getGuestListByStatusAndDate(Status.CHECKIN, localDate);
+        return guestRepository.findByCheckInEquals(localDate);
     }
 
     @GetMapping("/in")
