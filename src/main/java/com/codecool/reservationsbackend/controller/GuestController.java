@@ -1,8 +1,7 @@
 package com.codecool.reservationsbackend.controller;
 
-import com.codecool.reservationsbackend.entity.GuestDB;
-import com.codecool.reservationsbackend.model.Guest;
-import com.codecool.reservationsbackend.model.Status;
+import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.service.GuestStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public class GuestController {
 
 
     @GetMapping("/checkin")
-    public List<GuestDB> checkInList(
+    public List<Guest> checkInList(
             @RequestParam(value = "date", required = false) String date) {
         if (StringUtils.isEmpty(date)) {
             return guestRepository.findAll();
@@ -56,14 +55,15 @@ public class GuestController {
 
     @GetMapping("/changestatus")
     public List<Guest> changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
-        return guestStorage.changeGuestStatus(UUID.fromString(id), Status.valueOf(status));
+        return guestStorage.changeGuestStatus(Long.parseLong(id), Status.valueOf(status));
     }
 
+    /*
     @GetMapping("/search/{id}")
-    public List<Guest> getGuest(@PathVariable UUID id) {
+    public List<Guest> getGuest(@PathVariable Long id) {
         return guestStorage.getGuestListByGuestId(id);
     }
-
+     */
     @GetMapping("/setroom")
     public List<Guest> setRoom(@RequestParam(value = "roomId") String roomNumber, @RequestParam(value = "guestId") String guestId) {
         return guestStorage.getGuestList();

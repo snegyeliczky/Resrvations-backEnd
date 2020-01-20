@@ -1,6 +1,6 @@
 package com.codecool.reservationsbackend.entity;
 
-import com.codecool.reservationsbackend.repository.RoomRepository;
+import com.codecool.reservationsbackend.repositories.RoomRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class RoomDBTest {
 
     @Test
     public void saveOneRoom() {
-        RoomDB roomDB = RoomDB.builder()
+        Room roomDB = Room.builder()
                 .reserved(true)
                 .build();
 

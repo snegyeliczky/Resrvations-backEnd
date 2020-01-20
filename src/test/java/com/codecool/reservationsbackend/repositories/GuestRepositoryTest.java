@@ -1,7 +1,8 @@
 package com.codecool.reservationsbackend.repositories;
 
-import com.codecool.reservationsbackend.entity.GuestDB;
-import com.codecool.reservationsbackend.model.Status;
+import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Status;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class GuestRepositoryTest {
     @Autowired
     private GuestRepository guestRepository;
 
-    GuestDB bela1 =  GuestDB.builder().checkIn(LocalDate.of(2010,2,10))
+    Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
             .checkOut(LocalDate.of(2010,2,15))
             .name("Béca")
             .email("bela@bela.com")
@@ -34,7 +35,7 @@ public class GuestRepositoryTest {
     public void saveGuest(){
 
         guestRepository.save(bela1);
-        List<GuestDB> guestDBList = guestRepository.findAll();
+        List<Guest> guestDBList = guestRepository.findAll();
         assertThat(guestDBList).hasSize(1);
     }
 
@@ -42,7 +43,7 @@ public class GuestRepositoryTest {
     public void getGuestAtDate(){
         guestRepository.save(bela1);
 
-        List<GuestDB> guestDBList =guestRepository.findByCheckInEquals(LocalDate.of(2010,2,10));
+        List<Guest> guestDBList =guestRepository.findByCheckInEquals(LocalDate.of(2010,2,10));
 
         assertThat(guestDBList).hasSize(1)
                 .anyMatch(GuestDB ->GuestDB.getName().equals("Béca"));
