@@ -58,11 +58,12 @@ public class GuestController {
         return guestStorage.changeGuestStatus(Long.parseLong(id), Status.valueOf(status));
     }
 
+    /*
     @GetMapping("/search/{id}")
-    public List<Guest> getGuest(@PathVariable UUID id) {
+    public List<Guest> getGuest(@PathVariable Long id) {
         return guestStorage.getGuestListByGuestId(id);
     }
-
+     */
     @GetMapping("/setroom")
     public List<Guest> setRoom(@RequestParam(value = "roomId") String roomNumber, @RequestParam(value = "guestId") String guestId) {
         return guestStorage.getGuestList();
