@@ -21,31 +21,33 @@ public class GuestController {
 
 
     @GetMapping("/checkin")
-    public List<Guest> checkInList(@RequestParam(value = "date", required = false) String date) {
-        if (StringUtils.isEmpty(date)){
-        return guestStorage.getGuestListByStatus(Status.CHECKIN);
-    }
+    public List<Guest> checkInList(
+            @RequestParam(value = "date", required = false) String date) {
+        if (StringUtils.isEmpty(date)) {
+            return guestStorage
+                    .getGuestListByStatus(Status.CHECKIN);
+        }
         LocalDate localDate = LocalDate.parse(date);
-        return guestStorage.getGuestListByStatusAndDate(Status.CHECKIN, localDate);
+        return guestStorage
+                .getGuestListByStatusAndDate(Status.CHECKIN, localDate);
     }
 
     @GetMapping("/in")
     public List<Guest> inList(@RequestParam(value = "date", required = false) String date) {
-        if (StringUtils.isEmpty(date)){
-        return guestStorage.getGuestListByStatus(Status.IN);
-    }
+        if (StringUtils.isEmpty(date)) {
+            return guestStorage.getGuestListByStatus(Status.IN);
+        }
         LocalDate localDate = LocalDate.parse(date);
         return guestStorage.getGuestListByStatusAndDate(Status.IN, localDate);
     }
 
-
     @GetMapping("/checkout")
     public List<Guest> outListByDate(@RequestParam(value = "date", required = false) String date) {
-        if (StringUtils.isEmpty(date)){
+        if (StringUtils.isEmpty(date)) {
             return guestStorage.getGuestListByStatus(Status.CHECKIN);
         }
         LocalDate localDate = LocalDate.parse(date);
-        return guestStorage.getGuestListByStatusAndDate(Status.CHECKOUT,localDate);
+        return guestStorage.getGuestListByStatusAndDate(Status.CHECKOUT, localDate);
     }
 
 
