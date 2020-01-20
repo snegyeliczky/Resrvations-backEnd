@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 
 import javax.annotation.PostConstruct;
 
@@ -28,7 +30,8 @@ public class ReservationsBackendApplication {
 
     }
 
-    @PostConstruct
+    /*@Bean
+    @Profile("production")
     public void afterInit(){
         Guest guest =guestCreator.createRandomGuest();
         Guest guest2 =guestCreator.createRandomGuest();
@@ -40,5 +43,7 @@ public class ReservationsBackendApplication {
             roomStorage.addRoom();
         }
     }
+
+     */
 
 }
