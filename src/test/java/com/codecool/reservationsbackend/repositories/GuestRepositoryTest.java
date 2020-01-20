@@ -23,20 +23,29 @@ public class GuestRepositoryTest {
     @Autowired
     private GuestRepository guestRepository;
 
+    GuestDB bela1 =  GuestDB.builder().checkIn(LocalDate.of(2010,2,10))
+            .checkOut(LocalDate.of(2010,2,15))
+            .name("Béca")
+            .email("bela@bela.com")
+            .status(Status.CHECKIN)
+            .build();
 
     @Test
     public void saveGuest(){
-        GuestDB bela1 =  GuestDB.builder().checkIn(LocalDate.of(2010,2,10))
-                .checkOut(LocalDate.of(2010,2,15))
-                .name("Béca")
-                .email("bela@bela.com")
-                .status(Status.CHECKIN)
-                .build();
 
         guestRepository.save(bela1);
         List<GuestDB> guestDBList = guestRepository.findAll();
         assertThat(guestDBList).hasSize(1);
+    }
 
+    @Test
+    public void getGuestAtDate(){
+        guestRepository.save(bela1);
+
+        List<GuestDB> guestDBList =guestRepository.findByCheckInEquals(LocalDate.of(2010,2,10));
+
+        assertThat(guestDBList).hasSize(1)
+                .anyMatch(GuestDB ->GuestDB.getName().equals("Béca"));
     }
 
 }
