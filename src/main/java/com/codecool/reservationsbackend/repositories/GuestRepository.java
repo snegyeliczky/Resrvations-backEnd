@@ -1,13 +1,13 @@
 package com.codecool.reservationsbackend.repositories;
 
-import com.codecool.reservationsbackend.entity.GuestDB;
+import com.codecool.reservationsbackend.entity.Guest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public interface GuestRepository extends JpaRepository<GuestDB, Long> {
+public interface GuestRepository extends JpaRepository<Guest, Long> {
 
-    List<GuestDB> findByCheckIn(LocalDate date);
+    List<Guest> findByCheckIn(LocalDate date);
 
 }

@@ -1,6 +1,6 @@
 package com.codecool.reservationsbackend;
 
-import com.codecool.reservationsbackend.model.Guest;
+import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.service.GuestCreator;
 import com.codecool.reservationsbackend.service.RoomCreator;
 import com.codecool.reservationsbackend.service.RoomStorage;

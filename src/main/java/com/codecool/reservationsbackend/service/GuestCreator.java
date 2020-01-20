@@ -1,7 +1,7 @@
 package com.codecool.reservationsbackend.service;
 
-import com.codecool.reservationsbackend.model.Guest;
-import com.codecool.reservationsbackend.model.Status;
+import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

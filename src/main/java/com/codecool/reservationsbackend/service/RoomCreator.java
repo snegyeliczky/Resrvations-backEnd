@@ -1,6 +1,6 @@
 package com.codecool.reservationsbackend.service;
 
-import com.codecool.reservationsbackend.model.Room;
+import com.codecool.reservationsbackend.entity.Room;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 public class RoomCreator {
 
     public Room createRoom() {
-        Room room = new Room();
-        return room;
+        return new Room();
     }
 }

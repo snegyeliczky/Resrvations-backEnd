@@ -1,7 +1,7 @@
 package com.codecool.reservationsbackend.controller;
 
-import com.codecool.reservationsbackend.model.Guest;
-import com.codecool.reservationsbackend.model.Status;
+import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.service.GuestStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -53,6 +53,6 @@ public class GuestController {
 
     @GetMapping("/changestatus")
     public List<Guest> changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
-        return guestStorage.changeGuestStatus(UUID.fromString(id), Status.valueOf(status));
+        return guestStorage.changeGuestStatus(Long.parseLong(id), Status.valueOf(status));
     }
 }

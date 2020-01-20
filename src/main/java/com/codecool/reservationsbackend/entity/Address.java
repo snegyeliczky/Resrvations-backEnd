@@ -6,9 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Data
 @NoArgsConstructor
@@ -27,4 +25,8 @@ public class Address {
     private String address;
 
     private Integer zipCode;
+
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Guest guest;
 }
