@@ -1,24 +1,18 @@
 package com.codecool.reservationsbackend.service;
 
 
-import com.codecool.reservationsbackend.model.Guest;
-import com.codecool.reservationsbackend.model.Status;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Status;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class GuestStorage {
 
     private List<Guest> guestList = new LinkedList<>();
-
-    @Autowired
-    private GuestCreator guestCreator;
 
     public List<Guest> getGuestListByStatus(Status status) {
         return guestList.stream()
@@ -48,6 +42,25 @@ public class GuestStorage {
         }
     }
 
+    /*
+
+    private Map<Status, Supplier<List<Guest>>> statusFunctions = new HashMap<>();
+
+    public List<Guest> getGuestByStatus(){
+        statusFunctions.put(Status.CHECKOUT,()->{
+            return guestList.stream()
+                    .filter(guest -> guest.getCheckOut().equals(date))
+                    .collect(Collectors.toList());
+        });
+    }
+
+
+
+
+    public List<Guest> getGuestListByStatusAndDate(Status status, LocalDate date) {
+        return statusFunctions.get(status).get()
+    }
+*/
 
     public void addGuestToList(Guest guest) {
         this.guestList.add(guest);
@@ -57,15 +70,7 @@ public class GuestStorage {
         return guestList;
     }
 
-    public List<Guest> getGuestListByGuestId(UUID id) {
-        return guestList.stream()
-                .filter(guest -> guest.getId().equals(id))
-                .collect(Collectors.toList());
-    }
-
-
-
-    public List<Guest> changeGuestStatus(UUID id, Status status) {
+    public List<Guest> changeGuestStatus(Long id, Status status) {
         for (Guest guest : guestList) {
             if (id.equals(guest.getId())) {
                 guest.setStatus(status);

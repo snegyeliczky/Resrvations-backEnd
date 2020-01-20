@@ -1,6 +1,6 @@
 package com.codecool.reservationsbackend.controller;
 
-import com.codecool.reservationsbackend.model.Room;
+import com.codecool.reservationsbackend.entity.Room;
 import com.codecool.reservationsbackend.service.RoomStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
