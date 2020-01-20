@@ -43,7 +43,15 @@ public class ReservationsBackendApplication {
                     .status(Status.CHECKIN)
                     .build();
 
+            Guest Sándi =  Guest.builder().checkIn(LocalDate.now())
+                    .checkOut(LocalDate.now())
+                    .name("Sándi")
+                    .email("sadi@sandi.com")
+                    .status(Status.CHECKIN)
+                    .build();
+
             guestRepository.save(bela1);
+            guestRepository.save(Sándi);
         };
     }
 

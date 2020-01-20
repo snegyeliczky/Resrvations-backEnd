@@ -23,12 +23,16 @@ public class GuestController {
     @Autowired
     private GuestRepository guestRepository;
 
+    @GetMapping("/all")
+    public List<Guest> allGuest(){
+        return guestRepository.findAll();
+    }
 
     @GetMapping("/checkin")
     public List<Guest> checkInList(
             @RequestParam(value = "date", required = false) String date) {
         if (StringUtils.isEmpty(date)) {
-            return guestRepository.findAll();
+            return guestRepository.findByCheckInEquals(LocalDate.now());
         }
         LocalDate localDate = LocalDate.parse(date);
         return guestRepository.findByCheckInEquals(localDate);
