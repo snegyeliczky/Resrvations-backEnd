@@ -13,11 +13,11 @@ import java.util.Random;
 @Component
 public class GuestCreator {
 
-    private static List<String> names= Arrays.asList("Joco","Misi","Béla","Füles","Réka","Ákos","Ürsiklosi","Sándi");
+    private static List<String> names = Arrays.asList("Joco", "Misi", "Béla", "Füles", "Réka", "Ákos", "Ürsiklosi", "Sándi");
     @Autowired
     private RandomDateCreator randomDateCreator;
 
-    public Guest createRandomGuest(){
+    public Guest createRandomGuest() {
         Guest guest = new Guest();
         Random random = new Random();
 
@@ -26,7 +26,7 @@ public class GuestCreator {
         guest.setCheckOut(dates.get(1));
         String name = names.get(random.nextInt(names.size()));
         guest.setName(name);
-        guest.getAddress().setEmail(name+"@gmail.com");
+        guest.getAddress().setEmail(name + "@gmail.com");
         guest.setStatus(Status.values()[random.nextInt(Status.values().length)]);
 
         return guest;

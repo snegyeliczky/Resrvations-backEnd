@@ -30,17 +30,17 @@ public class ReservationsBackendApplication {
 
     @Bean
     @Profile("production")
-    public CommandLineRunner afterInit(){
+    public CommandLineRunner afterInit() {
 
         return args -> {
-            Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
-                    .checkOut(LocalDate.of(2010,2,15))
+            Guest bela1 = Guest.builder().checkIn(LocalDate.of(2010, 2, 10))
+                    .checkOut(LocalDate.of(2010, 2, 15))
                     .name("Béca")
                     .address(Address.builder().email("bela@bela.com").build())
                     .status(Status.CHECKIN)
                     .build();
 
-            Guest Sandi =  Guest.builder().checkIn(LocalDate.now())
+            Guest Sandi = Guest.builder().checkIn(LocalDate.now())
                     .checkOut(LocalDate.now())
                     .name("Sándi")
                     .address(Address.builder().email("sadi@sandi.com").build())
@@ -51,7 +51,6 @@ public class ReservationsBackendApplication {
             guestRepository.save(Sandi);
         };
     }
-
 
 
 }

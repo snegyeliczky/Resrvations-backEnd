@@ -36,11 +36,4 @@ public class Room {
     @EqualsAndHashCode.Exclude
     private List<Guest> guests;
 
-    public void addGuest(Guest guest) {
-        guests.add(guest);
-    }
-
-    public void removeGuest(Guest guest) {
-        guests.remove(guest);
-    }
 }

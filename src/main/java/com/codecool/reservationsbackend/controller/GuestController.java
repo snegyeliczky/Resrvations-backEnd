@@ -25,7 +25,7 @@ public class GuestController {
     private RoomRepository roomRepository;
 
     @GetMapping("/all")
-    public List<Guest> allGuest(){
+    public List<Guest> allGuest() {
         return guestRepository.findAll();
     }
 
@@ -57,23 +57,16 @@ public class GuestController {
         return guestRepository.findGuestsByStatusAndCheckInIsLike(Status.CHECKOUT, localDate);
     }
 
-
     @GetMapping("/changestatus")
     public int changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
         return guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
     }
 
-    /*
-    @GetMapping("/search/{id}")
-    public List<Guest> getGuest(@PathVariable Long id) {
-        return guestStorage.getGuestListByGuestId(id);
-    }
-     */
     @GetMapping("/setroom")
     public List<Guest> setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "guestId") String guestId) {
         Room room = roomRepository.getOne(Long.parseLong(roomId));
         guestRepository.updateGuestRoom(room, Long.parseLong(guestId));
 
-        return null;
+        return guestRepository.findAll();
     }
 }
