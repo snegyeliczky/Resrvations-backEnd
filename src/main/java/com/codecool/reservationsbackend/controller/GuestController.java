@@ -5,7 +5,6 @@ import com.codecool.reservationsbackend.entity.Room;
 import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.repositories.RoomRepository;
-import com.codecool.reservationsbackend.service.GuestStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @CrossOrigin
 @RestController
 @RequestMapping("/guest")
 public class GuestController {
-
-    @Autowired
-    private GuestStorage guestStorage;
 
     @Autowired
     private GuestRepository guestRepository;
@@ -27,12 +24,16 @@ public class GuestController {
     @Autowired
     private RoomRepository roomRepository;
 
+    @GetMapping("/all")
+    public List<Guest> allGuest(){
+        return guestRepository.findAll();
+    }
 
     @GetMapping("/checkin")
     public List<Guest> checkInList(
             @RequestParam(value = "date", required = false) String date) {
         if (StringUtils.isEmpty(date)) {
-            return guestRepository.findAll();
+            return guestRepository.findByCheckInEquals(LocalDate.now());
         }
         LocalDate localDate = LocalDate.parse(date);
         return guestRepository.findByCheckInEquals(localDate);
@@ -73,6 +74,6 @@ public class GuestController {
         Room room = roomRepository.getOne(Long.parseLong(roomId));
         guestRepository.updateGuestRoom(room, Long.parseLong(guestId));
 
-        return guestStorage.getGuestList();
+        return null;
     }
 }

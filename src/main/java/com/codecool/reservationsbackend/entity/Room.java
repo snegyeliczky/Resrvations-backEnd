@@ -16,11 +16,12 @@ public class Room {
     @GeneratedValue
     private Long id;
 
+    @Transient
     private static AtomicInteger at = new AtomicInteger(1);
 
     private int roomNumber;
 
-    private boolean reserved;
+    private boolean reserved = false;
 
     public Room() {
         this.roomNumber = at.getAndIncrement();

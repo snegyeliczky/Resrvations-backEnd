@@ -1,5 +1,8 @@
 package com.codecool.reservationsbackend.repositories;
 
+import com.codecool.reservationsbackend.entity.Address;
+import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.entity.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,15 +28,15 @@ public class GuestRepositoryTest {
     @Autowired
     private RoomRepository roomRepository;
 
+    private Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
+            .checkOut(LocalDate.of(2010,2,15))
+            .name("Béca")
+            .address(Address.builder().email("bela@bela.com").build())
+            .status(Status.CHECKIN)
+            .build();
+
     @Test
-    public void saveGuest() {
-        Guest bela1 = Guest.builder().checkIn(LocalDate.of(2010, 2, 10))
-                .checkOut(LocalDate.of(2010, 2, 15))
-                .id(1L)
-                .name("Béca")
-                .email("bela@bela.com")
-                .status(Status.CHECKIN)
-                .build();
+    public void saveGuest(){
 
         guestRepository.save(bela1);
         List<Guest> guestDBList = guestRepository.findAll();
@@ -41,14 +44,7 @@ public class GuestRepositoryTest {
     }
 
     @Test
-    public void getGuestAtDate() {
-        Guest bela1 = Guest.builder().checkIn(LocalDate.of(2010, 2, 10))
-                .checkOut(LocalDate.of(2010, 2, 15))
-                .id(1L)
-                .name("Béca")
-                .email("bela@bela.com")
-                .status(Status.CHECKIN)
-                .build();
+    public void getGuestAtDate(){
         guestRepository.save(bela1);
 
         List<Guest> guestDBList = guestRepository.findByCheckInEquals(LocalDate.of(2010, 2, 10));
@@ -110,21 +106,16 @@ public class GuestRepositoryTest {
 
 
     @Test
-    public void changeStatus() {
-        Guest bela1 = Guest.builder().checkIn(LocalDate.of(2010, 2, 10))
-                .checkOut(LocalDate.of(2010, 2, 15))
-                .name("Béca")
-                .email("bela@bela.com")
-                .status(Status.CHECKIN)
-                .build();
+    public void changeStatus(){
         guestRepository.save(bela1);
 
-        guestRepository.updateStatus(Status.CHECKOUT, bela1.getId());
+        guestRepository.updateStatus(Status.CHECKOUT,1L);
 
         List<Guest> guests = guestRepository.findGuestsByStatus(Status.CHECKOUT);
 
         assertThat(guests).hasSizeGreaterThanOrEqualTo(1)
-                .anyMatch(guest -> guest.getName().equals("Béca") && guest.getStatus() == Status.CHECKOUT);
+                .anyMatch(guest -> guest.getName().equals("Béca") && guest.getStatus()==Status.CHECKOUT);
+
     }
 
     @Test
