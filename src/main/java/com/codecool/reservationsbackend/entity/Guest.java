@@ -25,7 +25,7 @@ public class Guest {
 
     private LocalDate checkOut;
 
-    private String email;
+    ;
 
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST)

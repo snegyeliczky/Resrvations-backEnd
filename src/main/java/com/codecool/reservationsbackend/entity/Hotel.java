@@ -17,8 +17,8 @@ public class Hotel {
     @GeneratedValue
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String name;
-
 
     @Singular
     @OneToMany(mappedBy = "hotel",cascade = CascadeType.PERSIST)

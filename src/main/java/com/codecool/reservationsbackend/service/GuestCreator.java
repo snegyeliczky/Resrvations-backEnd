@@ -26,7 +26,7 @@ public class GuestCreator {
         guest.setCheckOut(dates.get(1));
         String name = names.get(random.nextInt(names.size()));
         guest.setName(name);
-        guest.setEmail(name+"@gmail.com");
+        guest.getAddress().setEmail(name+"@gmail.com");
         guest.setStatus(Status.values()[random.nextInt(Status.values().length)]);
 
         return guest;

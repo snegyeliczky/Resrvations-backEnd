@@ -26,6 +26,8 @@ public class Address {
 
     private Integer zipCode;
 
+    private String email;
+
 
     @OneToOne(cascade = CascadeType.PERSIST)
     private Guest guest;
