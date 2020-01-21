@@ -1,8 +1,10 @@
 package com.codecool.reservationsbackend.controller;
 
 import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Room;
 import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
+import com.codecool.reservationsbackend.repositories.RoomRepository;
 import com.codecool.reservationsbackend.service.GuestStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @CrossOrigin
 @RestController
@@ -22,6 +23,9 @@ public class GuestController {
 
     @Autowired
     private GuestRepository guestRepository;
+
+    @Autowired
+    private RoomRepository roomRepository;
 
 
     @GetMapping("/checkin")
@@ -65,7 +69,10 @@ public class GuestController {
     }
      */
     @GetMapping("/setroom")
-    public List<Guest> setRoom(@RequestParam(value = "roomId") String roomNumber, @RequestParam(value = "guestId") String guestId) {
+    public List<Guest> setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "guestId") String guestId) {
+        Room room = roomRepository.getOne(Long.parseLong(roomId));
+        guestRepository.updateGuestRoom(room, Long.parseLong(guestId));
+
         return guestStorage.getGuestList();
     }
 }

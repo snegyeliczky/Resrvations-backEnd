@@ -1,22 +1,18 @@
 package com.codecool.reservationsbackend.repositories;
 
-import com.codecool.reservationsbackend.entity.Guest;
-import com.codecool.reservationsbackend.entity.Status;
+import com.codecool.reservationsbackend.entity.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -26,16 +22,18 @@ public class GuestRepositoryTest {
     @Autowired
     private GuestRepository guestRepository;
 
-    Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
-            .checkOut(LocalDate.of(2010,2,15))
-            .id(1L)
-            .name("Béca")
-            .email("bela@bela.com")
-            .status(Status.CHECKIN)
-            .build();
+    @Autowired
+    private RoomRepository roomRepository;
 
     @Test
     public void saveGuest() {
+        Guest bela1 = Guest.builder().checkIn(LocalDate.of(2010, 2, 10))
+                .checkOut(LocalDate.of(2010, 2, 15))
+                .id(1L)
+                .name("Béca")
+                .email("bela@bela.com")
+                .status(Status.CHECKIN)
+                .build();
 
         guestRepository.save(bela1);
         List<Guest> guestDBList = guestRepository.findAll();
@@ -44,6 +42,13 @@ public class GuestRepositoryTest {
 
     @Test
     public void getGuestAtDate() {
+        Guest bela1 = Guest.builder().checkIn(LocalDate.of(2010, 2, 10))
+                .checkOut(LocalDate.of(2010, 2, 15))
+                .id(1L)
+                .name("Béca")
+                .email("bela@bela.com")
+                .status(Status.CHECKIN)
+                .build();
         guestRepository.save(bela1);
 
         List<Guest> guestDBList = guestRepository.findByCheckInEquals(LocalDate.of(2010, 2, 10));
@@ -105,15 +110,46 @@ public class GuestRepositoryTest {
 
 
     @Test
-    public void changeStatus(){
+    public void changeStatus() {
+        Guest bela1 = Guest.builder().checkIn(LocalDate.of(2010, 2, 10))
+                .checkOut(LocalDate.of(2010, 2, 15))
+                .name("Béca")
+                .email("bela@bela.com")
+                .status(Status.CHECKIN)
+                .build();
         guestRepository.save(bela1);
 
-        guestRepository.updateStatus(Status.CHECKOUT,1L);
+        guestRepository.updateStatus(Status.CHECKOUT, bela1.getId());
 
         List<Guest> guests = guestRepository.findGuestsByStatus(Status.CHECKOUT);
-        assertThat(guests).hasSizeGreaterThanOrEqualTo(1)
-                .anyMatch(guest -> guest.getName()=="Béca" && guest.getStatus()==Status.CHECKOUT);
 
+        assertThat(guests).hasSizeGreaterThanOrEqualTo(1)
+                .anyMatch(guest -> guest.getName().equals("Béca") && guest.getStatus() == Status.CHECKOUT);
+    }
+
+    @Test
+    public void updateGuestRoom() {
+        Guest anna = Guest.builder()
+                .name("Anna")
+                .status(Status.CHECKIN)
+                .build();
+
+        Room room = Room.builder().build();
+
+        guestRepository.save(anna);
+        roomRepository.save(room);
+
+        guestRepository.updateGuestRoom(room, anna.getId());
+
+        List<Guest> guests = guestRepository.findAll();
+
+        assertThat(guests)
+                .hasSize(1)
+                .allMatch(guest -> guest.getRoom().equals(room));
+
+        List<Guest> roomGuests = room.getGuests();
+
+        assertThat(roomGuests).allMatch(guest -> guest.equals(anna));
     }
 
 }

@@ -26,10 +26,6 @@ public class Room {
         this.roomNumber = at.getAndIncrement();
     }
 
-    public boolean isReserved() {
-        return reserved;
-    }
-
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Hotel hotel;
@@ -38,4 +34,12 @@ public class Room {
     @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @EqualsAndHashCode.Exclude
     private List<Guest> guests;
+
+    public void addGuest(Guest guest) {
+        guests.add(guest);
+    }
+
+    public void removeGuest(Guest guest) {
+        guests.remove(guest);
+    }
 }
