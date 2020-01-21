@@ -109,7 +109,7 @@ public class GuestRepositoryTest {
     public void changeStatus(){
         guestRepository.save(bela1);
 
-        guestRepository.updateStatus(Status.CHECKOUT,1L);
+        guestRepository.updateStatus(Status.CHECKOUT,bela1.getId());
 
         List<Guest> guests = guestRepository.findGuestsByStatus(Status.CHECKOUT);
 
