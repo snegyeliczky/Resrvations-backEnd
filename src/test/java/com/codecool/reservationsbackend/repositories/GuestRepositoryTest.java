@@ -1,5 +1,6 @@
 package com.codecool.reservationsbackend.repositories;
 
+import com.codecool.reservationsbackend.entity.Address;
 import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.entity.Status;
@@ -24,10 +25,10 @@ public class GuestRepositoryTest {
     @Autowired
     private GuestRepository guestRepository;
 
-    Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
+    private Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
             .checkOut(LocalDate.of(2010,2,15))
-            .name("Béca")
-            .email("bela@bela.com")
+            .name("Beca")
+            .address(Address.builder().email("bela@bela.com").build())
             .status(Status.CHECKIN)
             .build();
 
