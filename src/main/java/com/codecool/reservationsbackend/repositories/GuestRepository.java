@@ -12,6 +12,7 @@ import java.util.List;
 
 public interface GuestRepository extends JpaRepository<Guest, Long> {
 
+
     List<Guest> findByCheckInEquals(LocalDate date);
 
     List<Guest> findGuestsByStatus(Status status);
