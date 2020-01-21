@@ -27,7 +27,6 @@ public class GuestRepositoryTest {
 
     private Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
             .checkOut(LocalDate.of(2010,2,15))
-            .id(1L)
             .name("Béca")
             .address(Address.builder().email("bela@bela.com").build())
             .status(Status.CHECKIN)
@@ -55,11 +54,12 @@ public class GuestRepositoryTest {
     public void changeStatus(){
         guestRepository.save(bela1);
 
-        guestRepository.updateStatus(Status.CHECKOUT,1L);
+
+        guestRepository.updateStatus(Status.CHECKOUT,bela1.getId());
 
         List<Guest> guests = guestRepository.findGuestsByStatus(Status.CHECKOUT);
         assertThat(guests).hasSizeGreaterThanOrEqualTo(1)
-                .anyMatch(guest -> guest.getName()=="Béca" && guest.getStatus()==Status.CHECKOUT);
+                .anyMatch(guest -> guest.getName().equals("Béca") && guest.getStatus()==Status.CHECKOUT);
 
     }
 

@@ -73,14 +73,6 @@ public class GuestController {
         return guestStorage.getGuestList();
     }
 
-    /*
-    @GetMapping("/search/{id}")
-    public List<Guest> getGuest(@PathVariable Long id) {
-        return guestStorage.getGuestListByGuestId(id);
-    }
-     */
-    @GetMapping("/setroom")
-    public List<Guest> setRoom(@RequestParam(value = "roomId") String roomNumber, @RequestParam(value = "guestId") String guestId) {
-        return guestStorage.getGuestList();
-    }
+
+
 }
