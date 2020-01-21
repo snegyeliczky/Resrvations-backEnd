@@ -1,7 +1,6 @@
 package com.codecool.reservationsbackend.repositories;
 
 import com.codecool.reservationsbackend.entity.Guest;
-import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.entity.Status;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 
 @RunWith(SpringRunner.class)
@@ -26,6 +26,7 @@ public class GuestRepositoryTest {
 
     Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
             .checkOut(LocalDate.of(2010,2,15))
+            .id(1L)
             .name("Béca")
             .email("bela@bela.com")
             .status(Status.CHECKIN)
@@ -47,6 +48,18 @@ public class GuestRepositoryTest {
 
         assertThat(guestDBList).hasSize(1)
                 .anyMatch(GuestDB ->GuestDB.getName().equals("Béca"));
+    }
+
+    @Test
+    public void changeStatus(){
+        guestRepository.save(bela1);
+
+        guestRepository.updateStatus(Status.CHECKOUT,1L);
+
+        List<Guest> guests = guestRepository.findGuestsByStatus(Status.CHECKOUT);
+        assertThat(guests).hasSizeGreaterThanOrEqualTo(1)
+                .anyMatch(guest -> guest.getName()=="Béca" && guest.getStatus()==Status.CHECKOUT);
+
     }
 
 }

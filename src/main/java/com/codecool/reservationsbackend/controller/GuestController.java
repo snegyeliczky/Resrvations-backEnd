@@ -41,25 +41,36 @@ public class GuestController {
     @GetMapping("/in")
     public List<Guest> inList(@RequestParam(value = "date", required = false) String date) {
         if (StringUtils.isEmpty(date)) {
-            return guestStorage.getGuestListByStatus(Status.IN);
+            return guestRepository.findGuestsByStatus(Status.IN);
         }
         LocalDate localDate = LocalDate.parse(date);
-        return guestStorage.getGuestListByStatusAndDate(Status.IN, localDate);
+        return guestRepository.findGuestsByStatusAndCheckInIsLike(Status.IN, localDate);
     }
 
     @GetMapping("/checkout")
     public List<Guest> outListByDate(@RequestParam(value = "date", required = false) String date) {
         if (StringUtils.isEmpty(date)) {
-            return guestStorage.getGuestListByStatus(Status.CHECKIN);
+            return guestRepository.findGuestsByStatus(Status.CHECKIN);
         }
         LocalDate localDate = LocalDate.parse(date);
-        return guestStorage.getGuestListByStatusAndDate(Status.CHECKOUT, localDate);
+        return guestRepository.findGuestsByStatusAndCheckInIsLike(Status.CHECKOUT, localDate);
     }
 
 
     @GetMapping("/changestatus")
-    public List<Guest> changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
-        return guestStorage.changeGuestStatus(Long.parseLong(id), Status.valueOf(status));
+    public int changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
+        return guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
+    }
+
+    /*
+    @GetMapping("/search/{id}")
+    public List<Guest> getGuest(@PathVariable Long id) {
+        return guestStorage.getGuestListByGuestId(id);
+    }
+     */
+    @GetMapping("/setroom")
+    public List<Guest> setRoom(@RequestParam(value = "roomId") String roomNumber, @RequestParam(value = "guestId") String guestId) {
+        return guestStorage.getGuestList();
     }
 
     /*
