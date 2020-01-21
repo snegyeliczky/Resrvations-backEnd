@@ -54,8 +54,8 @@ public class GuestController {
 
 
     @GetMapping("/changestatus")
-    public List<Guest> changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
-        return guestStorage.changeGuestStatus(Long.parseLong(id), Status.valueOf(status));
+    public int changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
+        return guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
     }
 
     /*
