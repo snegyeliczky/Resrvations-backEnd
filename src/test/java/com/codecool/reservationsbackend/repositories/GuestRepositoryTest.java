@@ -10,9 +10,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -24,15 +26,15 @@ public class GuestRepositoryTest {
     @Autowired
     private GuestRepository guestRepository;
 
-    Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
-            .checkOut(LocalDate.of(2010,2,15))
+    Guest bela1 = Guest.builder().checkIn(LocalDate.of(2010, 2, 10))
+            .checkOut(LocalDate.of(2010, 2, 15))
             .name("Béca")
             .email("bela@bela.com")
             .status(Status.CHECKIN)
             .build();
 
     @Test
-    public void saveGuest(){
+    public void saveGuest() {
 
         guestRepository.save(bela1);
         List<Guest> guestDBList = guestRepository.findAll();
@@ -40,13 +42,65 @@ public class GuestRepositoryTest {
     }
 
     @Test
-    public void getGuestAtDate(){
+    public void getGuestAtDate() {
         guestRepository.save(bela1);
 
-        List<Guest> guestDBList =guestRepository.findByCheckInEquals(LocalDate.of(2010,2,10));
+        List<Guest> guestDBList = guestRepository.findByCheckInEquals(LocalDate.of(2010, 2, 10));
 
         assertThat(guestDBList).hasSize(1)
-                .anyMatch(GuestDB ->GuestDB.getName().equals("Béca"));
+                .anyMatch(GuestDB -> GuestDB.getName().equals("Béca"));
     }
+
+    @Test
+    public void findGuestsByStatus() {
+        Guest anna = Guest.builder()
+                .name("Anna")
+                .status(Status.CHECKIN)
+                .build();
+        Guest chris = Guest.builder()
+                .name("Chris")
+                .status(Status.CHECKIN)
+                .build();
+        Guest john = Guest.builder()
+                .name("John")
+                .status(Status.CHECKIN)
+                .build();
+
+        guestRepository.saveAll(Arrays.asList(anna, chris, john));
+
+        List<Guest> guestsByStatus = guestRepository.findGuestsByStatus(Status.CHECKIN);
+
+        assertThat(guestsByStatus)
+                .hasSize(3)
+                .allMatch(guest -> guest.getStatus().equals(Status.CHECKIN));
+    }
+
+    @Test
+    public void findGuestsByStatusAndCheckInIsLike() {
+        Guest anna = Guest.builder()
+                .name("Anna")
+                .status(Status.CHECKIN)
+                .checkIn(LocalDate.of(2012, 2, 2))
+                .build();
+        Guest chris = Guest.builder()
+                .name("Chris")
+                .status(Status.CHECKOUT)
+                .checkIn(LocalDate.of(2013, 3, 3))
+                .build();
+        Guest john = Guest.builder()
+                .name("John")
+                .status(Status.CHECKIN)
+                .checkIn(LocalDate.of(2014, 4, 4))
+                .build();
+
+        guestRepository.saveAll(Arrays.asList(anna, chris, john));
+
+        List<Guest> foundedGuests = guestRepository.findGuestsByStatusAndCheckInIsLike(
+                Status.CHECKIN,
+                LocalDate.of(2012, 2, 2));
+
+        assertThat(foundedGuests).hasSize(1);
+    }
+
 
 }
