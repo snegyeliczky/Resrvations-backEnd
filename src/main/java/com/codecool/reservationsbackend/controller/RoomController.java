@@ -1,7 +1,7 @@
 package com.codecool.reservationsbackend.controller;
 
 import com.codecool.reservationsbackend.entity.Room;
-import com.codecool.reservationsbackend.service.RoomStorage;
+import com.codecool.reservationsbackend.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +16,15 @@ import java.util.List;
 public class RoomController {
 
     @Autowired
-    private RoomStorage roomStorage;
+    private RoomRepository roomRepository;
 
     @GetMapping("/list")
     public List<Room> roomList() {
-        return roomStorage.getRoomList();
+        return roomRepository.findAll();
     }
 
     @GetMapping("/add")
     public Room addRoom() {
-        return roomStorage.addRoom();
+        return roomRepository.save(Room.builder().build());
     }
 }

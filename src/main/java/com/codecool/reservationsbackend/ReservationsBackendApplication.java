@@ -2,12 +2,8 @@ package com.codecool.reservationsbackend;
 
 import com.codecool.reservationsbackend.entity.Address;
 import com.codecool.reservationsbackend.entity.Guest;
-import com.codecool.reservationsbackend.entity.Hotel;
 import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
-import com.codecool.reservationsbackend.service.GuestCreator;
-import com.codecool.reservationsbackend.service.RoomCreator;
-import com.codecool.reservationsbackend.service.RoomStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +13,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 
 @SpringBootApplication
