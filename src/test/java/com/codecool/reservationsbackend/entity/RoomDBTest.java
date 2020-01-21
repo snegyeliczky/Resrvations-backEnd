@@ -1,5 +1,8 @@
 package com.codecool.reservationsbackend.entity;
 
+import com.codecool.reservationsbackend.repositories.AddressRepository;
+import com.codecool.reservationsbackend.repositories.GuestRepository;
+import com.codecool.reservationsbackend.repositories.HotelRepository;
 import com.codecool.reservationsbackend.repositories.RoomRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +21,15 @@ public class RoomDBTest {
 
     @Autowired
     private RoomRepository roomRepository;
+
+    @Autowired
+    private HotelRepository hotelRepository;
+
+    @Autowired
+    private GuestRepository guestRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Test
     public void saveOneRoom() {
