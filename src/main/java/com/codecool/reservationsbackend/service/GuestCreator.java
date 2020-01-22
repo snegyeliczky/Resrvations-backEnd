@@ -42,7 +42,9 @@ public class GuestCreator {
                 .build();
     }
 
-    public void addGuest(Guest guest) {
+    public void addGuest(Guest guest, Address address) {
+        guest.setAddress(address);
+        guest.setStatus(Status.CHECKIN);
         guestRepository.save(guest);
     }
 }
