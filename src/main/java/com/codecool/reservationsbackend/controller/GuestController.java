@@ -10,6 +10,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/guest")
 public class GuestController {
+
 
     @Autowired
     private GuestRepository guestRepository;
@@ -57,11 +59,26 @@ public class GuestController {
         return guestRepository.findGuestsByStatusAndCheckInIsLike(Status.CHECKOUT, localDate);
     }
 
-    @GetMapping("/changestatus")
-    public int changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
-        return guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
+
+
+    @PutMapping("/changestatus")
+    public void changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status, @RequestBody
+            HashMap map) {
+        if (StringUtils.isEmpty(status)){
+            return;
+        }
+        System.out.println(map.toString());
+        System.out.println(id+status);
+        guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
+        return;
     }
 
+    /*
+    @GetMapping("/search/{id}")
+    public List<Guest> getGuest(@PathVariable Long id) {
+        return guestStorage.getGuestListByGuestId(id);
+    }
+     */
     @GetMapping("/setroom")
     public List<Guest> setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "guestId") String guestId) {
         Room room = roomRepository.getOne(Long.parseLong(roomId));

@@ -7,10 +7,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
+@Transactional
 public interface GuestRepository extends JpaRepository<Guest, Long> {
 
     List<Guest> findByCheckInEquals(LocalDate date);
@@ -21,7 +25,7 @@ public interface GuestRepository extends JpaRepository<Guest, Long> {
 
     @Query("UPDATE Guest g SET g.status = :status WHERE g.id = :guestId")
     @Modifying(clearAutomatically = true)
-    int updateStatus(@Param("status") Status status, @Param("guestId") long guestId);
+    void updateStatus(@Param("status") Status status, @Param("guestId") long guestId);
 
     @Query("UPDATE Guest g SET g.room = :room WHERE g.id = :guestId")
     @Modifying(clearAutomatically = true)
