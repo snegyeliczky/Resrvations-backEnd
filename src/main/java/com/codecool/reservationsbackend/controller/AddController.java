@@ -4,7 +4,6 @@ package com.codecool.reservationsbackend.controller;
 import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.service.GuestCreator;
-import com.codecool.reservationsbackend.service.GuestStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

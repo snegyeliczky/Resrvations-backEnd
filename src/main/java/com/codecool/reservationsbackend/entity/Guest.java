@@ -25,8 +25,6 @@ public class Guest {
 
     private LocalDate checkOut;
 
-    ;
-
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Room room;

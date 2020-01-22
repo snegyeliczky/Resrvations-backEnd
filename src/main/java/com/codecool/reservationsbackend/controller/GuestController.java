@@ -1,9 +1,10 @@
 package com.codecool.reservationsbackend.controller;
 
 import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Room;
 import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
-import com.codecool.reservationsbackend.service.GuestStorage;
+import com.codecool.reservationsbackend.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -11,21 +12,22 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
+
 
 @CrossOrigin
 @RestController
 @RequestMapping("/guest")
 public class GuestController {
 
-    @Autowired
-    private GuestStorage guestStorage;
 
     @Autowired
     private GuestRepository guestRepository;
 
+    @Autowired
+    private RoomRepository roomRepository;
+
     @GetMapping("/all")
-    public List<Guest> allGuest(){
+    public List<Guest> allGuest() {
         return guestRepository.findAll();
     }
 
@@ -70,15 +72,18 @@ public class GuestController {
         guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
         return;
     }
-/*
+
+    /*
     @GetMapping("/search/{id}")
     public List<Guest> getGuest(@PathVariable Long id) {
         return guestStorage.getGuestListByGuestId(id);
     }
      */
     @GetMapping("/setroom")
-    public List<Guest> setRoom(@RequestParam(value = "roomId") String roomNumber, @RequestParam(value = "guestId") String guestId) {
-        return guestStorage.getGuestList();
-    }
+    public List<Guest> setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "guestId") String guestId) {
+        Room room = roomRepository.getOne(Long.parseLong(roomId));
+        guestRepository.updateGuestRoom(room, Long.parseLong(guestId));
 
+        return guestRepository.findAll();
+    }
 }

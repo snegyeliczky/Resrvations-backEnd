@@ -21,17 +21,14 @@ public class Hotel {
     private String name;
 
     @Singular
-    @OneToMany(mappedBy = "hotel",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.PERSIST)
     @EqualsAndHashCode.Exclude
     private List<Room> rooms;
 
-
     @Singular
-    @OneToMany(mappedBy = "hotel",cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.PERSIST)
     @EqualsAndHashCode.Exclude
     private List<Guest> guests;
-
-
 
 
 }
