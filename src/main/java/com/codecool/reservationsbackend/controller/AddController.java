@@ -2,13 +2,9 @@ package com.codecool.reservationsbackend.controller;
 
 
 import com.codecool.reservationsbackend.entity.Guest;
-import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.service.GuestCreator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
@@ -18,9 +14,10 @@ public class AddController {
     @Autowired
     private GuestCreator guestCreator;
 
-    @Autowired
-    private GuestRepository guestRepository;
-
+    @PostMapping("/guest")
+    public void addGuest(@RequestBody Guest guest) {
+        guestCreator.addGuest(guest);
+    }
 
 
 }

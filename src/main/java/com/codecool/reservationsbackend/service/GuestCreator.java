@@ -4,6 +4,8 @@ import com.codecool.reservationsbackend.entity.Address;
 import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.entity.Hotel;
 import com.codecool.reservationsbackend.entity.Status;
+import com.codecool.reservationsbackend.repositories.GuestRepository;
+import com.codecool.reservationsbackend.repositories.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +21,12 @@ public class GuestCreator {
     @Autowired
     private RandomDateCreator randomDateCreator;
 
+    @Autowired
+    private HotelRepository hotelRepository;
+
+    @Autowired
+    private GuestRepository guestRepository;
+
     public Guest createRandomGuest(Hotel hotel) {
         Random random = new Random();
         List<LocalDate> dates = randomDateCreator.dateCreator();
@@ -32,5 +40,9 @@ public class GuestCreator {
                 .hotel(hotel)
                 .address(Address.builder().email(name + "@gmail.com").build())
                 .build();
+    }
+
+    public void addGuest(Guest guest) {
+        guestRepository.save(guest);
     }
 }
