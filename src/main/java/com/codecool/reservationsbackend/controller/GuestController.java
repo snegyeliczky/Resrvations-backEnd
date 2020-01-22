@@ -79,11 +79,16 @@ public class GuestController {
         return guestStorage.getGuestListByGuestId(id);
     }
      */
-    @GetMapping("/setroom")
-    public List<Guest> setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "guestId") String guestId) {
-        Room room = roomRepository.getOne(Long.parseLong(roomId));
+    @PutMapping("/setroom")
+    public Guest setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "guestId") String guestId) {
+        Room room = null;
+
+        if (roomRepository.findAll().stream()
+                .anyMatch(room1 -> room1.getId().equals(Long.parseLong(roomId)))) {
+            room = roomRepository.getOne(Long.parseLong(roomId));
+        }
         guestRepository.updateGuestRoom(room, Long.parseLong(guestId));
 
-        return guestRepository.findAll();
+        return guestRepository.getOne(Long.parseLong(guestId));
     }
 }
