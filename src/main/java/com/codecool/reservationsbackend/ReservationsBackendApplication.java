@@ -21,70 +21,13 @@ import java.util.Random;
 
 @SpringBootApplication
 public class ReservationsBackendApplication {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReservationsBackendApplication.class);
-
-    @Autowired
-    private GuestRepository guestRepository;
-
-    @Autowired
-    private HotelRepository hotelRepository;
-
-    @Autowired
-    private GuestCreator guestCreator;
-
-    @Autowired
-    private RoomCreator roomCreator;
-
     public static void main(String[] args) {
         SpringApplication.run(ReservationsBackendApplication.class, args);
 
     }
 
-    @Bean
-    @Profile("production")
-    public CommandLineRunner afterInit() {
-
-        return args -> {
-
-            if (hotelRepository.findAll().size() == 0) {
-                Random random = new Random();
-                List<Room> rooms = new ArrayList<>();
-                List<Guest> guests = new ArrayList<>();
-
-                Hotel hotel = Hotel.builder()
-                        .name("Budapest best Hotel!")
-                        .build();
 
 
-                for (int i = 0; i < 8; i++) {
-                    Room room = roomCreator.createRoom(hotel);
-                    rooms.add(room);
-                }
-
-
-
-                for (int i = 0; i < 10; i++) {
-
-                    Guest guest = guestCreator.createRandomGuest(hotel);
-
-                    if (guest.getStatus().equals(Status.IN)) {
-                        guest.setRoom(rooms.get(random.nextInt(rooms.size())));
-                    }
-
-
-                    guests.add(guest);
-                }
-
-                hotel.setRooms(rooms);
-                hotel.setGuests(guests);
-                hotelRepository.save(hotel);
-            }
-
-
-
-        };
-    }
 
 
 }

@@ -2,8 +2,8 @@ package com.codecool.reservationsbackend.repositories;
 
 import com.codecool.reservationsbackend.entity.Address;
 import com.codecool.reservationsbackend.entity.Guest;
+import com.codecool.reservationsbackend.entity.Room;
 import com.codecool.reservationsbackend.entity.Status;
-import com.codecool.reservationsbackend.entity.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +11,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -135,12 +135,9 @@ public class GuestRepositoryTest {
         List<Guest> guests = guestRepository.findAll();
 
         assertThat(guests)
-                .hasSize(1)
-                .allMatch(guest -> guest.getRoom().equals(room));
+                .anyMatch(guest -> guest.getRoom().equals(room));
 
-        List<Guest> roomGuests = room.getGuests();
 
-        assertThat(roomGuests).allMatch(guest -> guest.equals(anna));
     }
 
 }

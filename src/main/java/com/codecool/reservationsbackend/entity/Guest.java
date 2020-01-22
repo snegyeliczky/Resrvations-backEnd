@@ -28,7 +28,7 @@ public class Guest {
 
     @JsonIgnore
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Room room;
 
     @JsonIgnore

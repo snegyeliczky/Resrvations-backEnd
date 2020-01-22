@@ -40,9 +40,10 @@ public class Room {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Hotel hotel;
 
-    @Singular
-    @OneToMany(mappedBy = "room", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    @EqualsAndHashCode.Exclude
-    private List<Guest> guests;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Guest guest;
+
+
+
 
 }
