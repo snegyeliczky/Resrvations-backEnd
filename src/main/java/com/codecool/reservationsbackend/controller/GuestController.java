@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -57,12 +58,19 @@ public class GuestController {
     }
 
 
-    @GetMapping("/changestatus")
-    public int changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
-        return guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
-    }
 
-    /*
+    @PutMapping("/changestatus")
+    public void changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status, @RequestBody
+            HashMap map) {
+        if (StringUtils.isEmpty(status)){
+            return;
+        }
+        System.out.println(map.toString());
+        System.out.println(id+status);
+        guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
+        return;
+    }
+/*
     @GetMapping("/search/{id}")
     public List<Guest> getGuest(@PathVariable Long id) {
         return guestStorage.getGuestListByGuestId(id);
@@ -72,7 +80,5 @@ public class GuestController {
     public List<Guest> setRoom(@RequestParam(value = "roomId") String roomNumber, @RequestParam(value = "guestId") String guestId) {
         return guestStorage.getGuestList();
     }
-
-
 
 }
