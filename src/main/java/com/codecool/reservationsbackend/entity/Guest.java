@@ -1,5 +1,6 @@
 package com.codecool.reservationsbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -25,10 +26,12 @@ public class Guest {
 
     private LocalDate checkOut;
 
+    @JsonIgnore
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Room room;
 
+    @JsonIgnore
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Hotel hotel;

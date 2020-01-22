@@ -1,6 +1,8 @@
 package com.codecool.reservationsbackend.controller;
 
+import com.codecool.reservationsbackend.entity.Hotel;
 import com.codecool.reservationsbackend.entity.Room;
+import com.codecool.reservationsbackend.repositories.HotelRepository;
 import com.codecool.reservationsbackend.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +20,9 @@ public class RoomController {
     @Autowired
     private RoomRepository roomRepository;
 
+    @Autowired
+    private HotelRepository hotelRepository;
+
     @GetMapping("/list")
     public List<Room> roomList() {
         return roomRepository.findAll();
@@ -25,6 +30,9 @@ public class RoomController {
 
     @GetMapping("/add")
     public Room addRoom() {
-        return roomRepository.save(Room.builder().build());
+        List<Hotel> hotels = hotelRepository.findAll();
+        return roomRepository.save(Room.builder()
+                .hotel(hotels.get(0))
+                .build());
     }
 }

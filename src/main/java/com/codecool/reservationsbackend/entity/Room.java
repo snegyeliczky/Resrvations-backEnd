@@ -1,5 +1,6 @@
 package com.codecool.reservationsbackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -21,12 +22,20 @@ public class Room {
 
     private int roomNumber;
 
-    private boolean reserved = false;
+    private boolean reserved;
+
+    public Room(Hotel hotel) {
+        this.roomNumber = at.getAndIncrement();
+        this.reserved = false;
+        this.hotel = hotel;
+    }
 
     public Room() {
         this.roomNumber = at.getAndIncrement();
+        this.reserved = false;
     }
 
+    @JsonIgnore
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Hotel hotel;

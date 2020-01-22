@@ -21,11 +21,6 @@ public class AddController {
     @Autowired
     private GuestRepository guestRepository;
 
-    @GetMapping("/guest")
-    public Guest createRandomGuest() {
-        Guest guest = guestCreator.createRandomGuest();
-        guestRepository.save(guest);
-        return guest;
-    }
+
 
 }
