@@ -40,5 +40,9 @@ public class Guest {
     @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
+    private Integer roomNumber;
 
+    public void setRoomNumber() {
+        this.roomNumber = room.getRoomNumber();
+    };
 }

@@ -32,7 +32,7 @@ public class GuestCreator {
         List<LocalDate> dates = randomDateCreator.dateCreator();
         String name = names.get(random.nextInt(names.size()));
 
-        return Guest.builder()
+        Guest guest = Guest.builder()
                 .name(name)
                 .checkIn(dates.get(0))
                 .checkOut(dates.get(1))
@@ -40,6 +40,7 @@ public class GuestCreator {
                 .hotel(hotel)
                 .address(Address.builder().email(name + "@gmail.com").build())
                 .build();
+        return guest;
     }
 
     public void addGuest(Guest guest, Address address) {

@@ -40,6 +40,7 @@ public class Room {
     @ManyToOne(cascade = CascadeType.PERSIST)
     private Hotel hotel;
 
+
     @OneToOne(cascade = CascadeType.PERSIST)
     private Guest guest;
 

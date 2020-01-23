@@ -70,6 +70,7 @@ public class Initializer {
                         } while (rom.getGuest() != null);
                         rom.setGuest(guest);
                         guest.setRoom(rom);
+                        guest.setRoomNumber();
                     }
 
 
