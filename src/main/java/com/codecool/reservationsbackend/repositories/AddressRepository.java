@@ -8,9 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 public interface AddressRepository extends JpaRepository<Address, Long> {
 
-    @Query("UPDATE Address a SET a.country = :country, a.city = :city, a.street = :street, a.zipCode = :zipCode, a.email = :email WHERE a.id = :addressID")
+    @Query("UPDATE Address a SET a.country = :country, a.city = :city, a.street = :street, a.zipCode = :zipCode, a.email = :email WHERE a.id = :addressId")
     @Modifying(clearAutomatically = true)
-    void editAddress(@Param("country") String country,
+    void editAddressById(@Param("country") String country,
                      @Param("city") String city,
                      @Param("street") String street,
                      @Param("zipCode") Integer zipCode,

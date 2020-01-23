@@ -33,7 +33,7 @@ public interface GuestRepository extends JpaRepository<Guest, Long> {
 
     @Query("UPDATE Guest g SET g.name = :name WHERE g.id = :guestId")
     @Modifying(clearAutomatically = true)
-    void editGuest(@Param("name") String name, @Param("guestId") long guestId);
+    void editGuestById(@Param("name") String name, @Param("guestId") long guestId);
 
 
 }
