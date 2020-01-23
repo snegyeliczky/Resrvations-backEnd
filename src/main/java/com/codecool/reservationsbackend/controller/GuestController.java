@@ -70,6 +70,10 @@ public class GuestController {
         if (StringUtils.isEmpty(status)){
             return;
         }
+        if (status.equals("CHECKOUT")) {
+            guestRepository.updateGuestRoom(null, Long.parseLong(id));
+            guestRepository.getOne(Long.parseLong(id)).setRoomNumber(null);
+        }
         guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
     }
 
