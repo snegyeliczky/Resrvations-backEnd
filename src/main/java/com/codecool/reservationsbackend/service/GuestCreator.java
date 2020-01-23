@@ -44,6 +44,7 @@ public class GuestCreator {
 
     public void addGuest(Guest guest, Address address) {
         guest.setAddress(address);
+        address.setGuest(guest);
         guest.setStatus(Status.CHECKIN);
         guestRepository.save(guest);
     }

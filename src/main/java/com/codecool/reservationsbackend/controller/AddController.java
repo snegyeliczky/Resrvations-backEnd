@@ -1,7 +1,5 @@
 package com.codecool.reservationsbackend.controller;
 
-
-import com.codecool.reservationsbackend.entity.Address;
 import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.service.GuestCreator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +14,8 @@ public class AddController {
     private GuestCreator guestCreator;
 
     @PostMapping("/guest")
-    public void addGuest(@RequestBody Guest guest, @RequestBody Address address) {
-        guestCreator.addGuest(guest, address);
+    public void addGuest(@RequestBody Guest guest) {
+        guestCreator.addGuest(guest, guest.getAddress());
     }
 
 
