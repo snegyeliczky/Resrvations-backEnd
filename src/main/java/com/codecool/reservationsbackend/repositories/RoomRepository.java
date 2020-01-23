@@ -1,5 +1,6 @@
 package com.codecool.reservationsbackend.repositories;
 
+import com.codecool.reservationsbackend.entity.Guest;
 import com.codecool.reservationsbackend.entity.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -14,4 +15,9 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
     @Modifying(clearAutomatically = true)
     int removeGuestFromRoomByRoomId(@Param("roomId") long roomId);
 
+    @Query("UPDATE Room r SET r.guest = :guest WHERE r.id = :roomId")
+    @Modifying(clearAutomatically = true)
+    void setGuestByRoomId(@Param("roomId") long roomId, @Param("guest") Guest guest);
+
+    Room getRoomByGuestId(long l);
 }

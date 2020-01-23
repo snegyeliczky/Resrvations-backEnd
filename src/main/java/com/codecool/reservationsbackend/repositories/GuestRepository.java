@@ -27,9 +27,9 @@ public interface GuestRepository extends JpaRepository<Guest, Long> {
     @Modifying(clearAutomatically = true)
     void updateStatus(@Param("status") Status status, @Param("guestId") long guestId);
 
-    @Query("UPDATE Guest g SET g.room = :room WHERE g.id = :guestId")
+    @Query("UPDATE Guest g SET g.room = :room, g.roomNumber = :roomNumber WHERE g.id = :guestId")
     @Modifying(clearAutomatically = true)
-    int updateGuestRoom(@Param("room") Room room, @Param("guestId") long guestId);
+    int updateGuestRoom(@Param("room") Room room, @Param("guestId") long guestId, @Param("roomNumber") Integer roomNumber);
 
     @Query("UPDATE Guest g SET g.name = :name WHERE g.id = :guestId")
     @Modifying(clearAutomatically = true)

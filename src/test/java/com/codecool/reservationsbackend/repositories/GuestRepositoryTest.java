@@ -130,7 +130,7 @@ public class GuestRepositoryTest {
         guestRepository.save(anna);
         roomRepository.save(room);
 
-        guestRepository.updateGuestRoom(room, anna.getId());
+        guestRepository.updateGuestRoom(room, anna.getId(),room.getRoomNumber());
 
         List<Guest> guests = guestRepository.findAll();
 

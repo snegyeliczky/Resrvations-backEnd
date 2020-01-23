@@ -71,9 +71,12 @@ public class GuestController {
             return;
         }
         if (status.equals("CHECKOUT")) {
-            Guest guest = guestRepository.getOne(Long.parseLong(id));
-            roomRepository.removeGuestFromRoomByRoomId(guest.getRoom().getId());
-            guestRepository.removeGuestRoom(Long.parseLong(id));
+            Guest guest = guestRepository.findById(Long.parseLong(id)).orElse(null);
+            assert guest != null;
+            if (guest.getRoomNumber() != null) {
+                roomRepository.removeGuestFromRoomByRoomId(guest.getRoom().getId());
+                guestRepository.removeGuestRoom(Long.parseLong(id));
+            }
         }
         guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
     }
@@ -85,16 +88,17 @@ public class GuestController {
     }
      */
     @PutMapping("/setroom")
-    public Guest setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "guestId") String guestId) {
-        Room room = null;
-
-        if (roomRepository.findAll().stream()
+    public void setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "guestId") String guestId) {
+        if (!roomId.equals("") && roomRepository.findAll().stream()
                 .anyMatch(room1 -> room1.getId().equals(Long.parseLong(roomId)))) {
-            room = roomRepository.getOne(Long.parseLong(roomId));
+            Room rom = roomRepository.getRoomByGuestId(Long.parseLong(guestId));
+                if (rom != null && rom.getGuest() != null) {
+                    roomRepository.removeGuestFromRoomByRoomId(rom.getId());
+                }
+            Room room = roomRepository.getOne(Long.parseLong(roomId));
+            guestRepository.updateGuestRoom(room, Long.parseLong(guestId), room.getRoomNumber());
+            roomRepository.setGuestByRoomId(Long.parseLong(roomId), guestRepository.getOne(Long.parseLong(guestId)));
         }
-        guestRepository.updateGuestRoom(room, Long.parseLong(guestId));
-
-        return guestRepository.getOne(Long.parseLong(guestId));
     }
 
     @PutMapping("/edit")
