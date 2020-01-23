@@ -71,8 +71,9 @@ public class GuestController {
             return;
         }
         if (status.equals("CHECKOUT")) {
-            guestRepository.updateGuestRoom(null, Long.parseLong(id));
-            guestRepository.getOne(Long.parseLong(id)).setRoomNumber(null);
+            Guest guest = guestRepository.getOne(Long.parseLong(id));
+            roomRepository.removeGuestFromRoomByRoomId(guest.getRoom().getId());
+            guestRepository.removeGuestRoom(Long.parseLong(id));
         }
         guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
     }
