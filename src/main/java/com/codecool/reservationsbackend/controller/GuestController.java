@@ -5,6 +5,7 @@ import com.codecool.reservationsbackend.entity.Room;
 import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.repositories.RoomRepository;
+import com.codecool.reservationsbackend.service.EditGuest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ import java.util.List;
 @RequestMapping("/guest")
 public class GuestController {
 
+
+    @Autowired
+    private EditGuest editGuest;
 
     @Autowired
     private GuestRepository guestRepository;
@@ -91,4 +95,7 @@ public class GuestController {
 
         return guestRepository.getOne(Long.parseLong(guestId));
     }
+
+    @PutMapping("/edit")
+    public void e1ditGuest(@RequestBody Guest guest) { editGuest.editGuest(guest); }
 }
