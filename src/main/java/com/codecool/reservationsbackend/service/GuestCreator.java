@@ -43,8 +43,10 @@ public class GuestCreator {
     }
 
     public void addGuest(Guest guest, Address address) {
+        List<Hotel> hotels = hotelRepository.findAll();
         guest.setAddress(address);
         address.setGuest(guest);
+        guest.setHotel(hotels.get(0));
         guest.setStatus(Status.CHECKIN);
         guestRepository.save(guest);
     }

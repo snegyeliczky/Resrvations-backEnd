@@ -66,15 +66,11 @@ public class GuestController {
 
 
     @PutMapping("/changestatus")
-    public void changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status, @RequestBody
-            HashMap map) {
+    public void changeGuestStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
         if (StringUtils.isEmpty(status)){
             return;
         }
-        System.out.println(map.toString());
-        System.out.println(id+status);
         guestRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
-        return;
     }
 
     /*

@@ -1,6 +1,7 @@
 package com.codecool.reservationsbackend.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class Address {
 
     private String email;
 
-
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.PERSIST)
     private Guest guest;
 }
