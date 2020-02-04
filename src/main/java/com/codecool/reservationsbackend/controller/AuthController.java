@@ -1,10 +1,7 @@
 package com.codecool.reservationsbackend.controller;
 
-import com.codecool.reservationsbackend.repositories.UserRepository;
 import com.codecool.reservationsbackend.security.JwtTokenServices;
 import com.codecool.reservationsbackend.service.UserCredentials;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,23 +14,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/auth")
-@Data
-@AllArgsConstructor
 public class AuthController {
 
-    @Autowired
     private final AuthenticationManager authenticationManager;
 
-    @Autowired
     private final JwtTokenServices jwtTokenServices;
 
+    public AuthController(AuthenticationManager authenticationManager, JwtTokenServices jwtTokenServices) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenServices = jwtTokenServices;
+    }
 
     @PostMapping("/signin")
     public ResponseEntity signin(@RequestBody UserCredentials data, HttpServletResponse response) {
@@ -49,7 +45,7 @@ public class AuthController {
 
             String token = jwtTokenServices.createToken(username, roles);
             Cookie cookieToken = new Cookie("token", token);
-            cookieToken.setMaxAge(36000000);
+            cookieToken.setMaxAge(60*60*24);
             cookieToken.setHttpOnly(true);
             cookieToken.setPath("/");
             response.addCookie(cookieToken);
