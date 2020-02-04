@@ -1,11 +1,9 @@
 package com.codecool.reservationsbackend.init;
 
-import com.codecool.reservationsbackend.entity.Guest;
-import com.codecool.reservationsbackend.entity.Hotel;
-import com.codecool.reservationsbackend.entity.Room;
-import com.codecool.reservationsbackend.entity.Status;
+import com.codecool.reservationsbackend.entity.*;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.repositories.HotelRepository;
+import com.codecool.reservationsbackend.repositories.UserRepository;
 import com.codecool.reservationsbackend.service.GuestCreator;
 import com.codecool.reservationsbackend.service.RoomCreator;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +12,11 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -37,8 +38,15 @@ public class Initializer {
     @Autowired
     private RoomCreator roomCreator;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    private PasswordEncoder passwordEncoder;
+
     @Bean
     public CommandLineRunner afterInit() {
+
+        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
         return args -> {
 
@@ -76,6 +84,14 @@ public class Initializer {
 
                     guests.add(guest);
                 }
+
+                AppUser adminOfAdmins = AppUser.builder()
+                        .password(passwordEncoder.encode("salata"))
+                        .username("cezar")
+                        .roles(Arrays.asList(Roles.ADMIN,Roles.SLAVE))
+                        .build();
+
+                userRepository.save(adminOfAdmins);
 
                 hotel.setRooms(rooms);
                 hotel.setGuests(guests);
