@@ -61,13 +61,11 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity logout(HttpServletRequest req, HttpServletResponse response) {
         try {
-            Cookie[] cookies = req.getCookies();
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    cookie.setValue(null);
-                    response.setHeader("token", "");
-                }
-            }
+            Cookie cookieToken = new Cookie("token", null);
+            cookieToken.setMaxAge(0);
+            cookieToken.setHttpOnly(true);
+            cookieToken.setPath("/");
+            response.addCookie(cookieToken);
 
             return ResponseEntity.ok("");
 
