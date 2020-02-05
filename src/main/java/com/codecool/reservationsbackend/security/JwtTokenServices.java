@@ -50,7 +50,7 @@ public class JwtTokenServices {
                 .compact();
     }
 
-    String getTokenFromCookie(HttpServletRequest req) {
+    String getTokenValueFromCookie(HttpServletRequest req) {
 
         Cookie[] cookies = req.getCookies();
         if (cookies != null) {
@@ -70,6 +70,28 @@ public class JwtTokenServices {
         }
         return null;
 **/
+    }
+
+    public Cookie getTokenCookie(HttpServletRequest req) {
+
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    return cookie;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public boolean removeTokenFromCookie(HttpServletRequest req, Cookie token) {
+
+        Cookie[] cookies = req.getCookies();
+        Arrays.stream(cookies).filter(cookie -> cookie.equals(token));
+
+        return false;
     }
 
     // checks if the token is valid and not expired.
@@ -102,4 +124,5 @@ public class JwtTokenServices {
         }
         return new UsernamePasswordAuthenticationToken(username, "", authorities);
     }
+
 }

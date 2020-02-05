@@ -3,6 +3,7 @@ package com.codecool.reservationsbackend.controller;
 import com.codecool.reservationsbackend.security.JwtTokenServices;
 import com.codecool.reservationsbackend.service.UserCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,7 +14,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +38,6 @@ public class AuthController {
     public ResponseEntity signin(@RequestBody UserCredentials data, HttpServletResponse response) {
         try {
             String username = data.getUsername();
-            System.out.println(username);
             // authenticationManager.authenticate calls loadUserByUsername in CustomUserDetailsService
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, data.getPassword()));
             List<String> roles = authentication.getAuthorities()
@@ -45,7 +47,7 @@ public class AuthController {
 
             String token = jwtTokenServices.createToken(username, roles);
             Cookie cookieToken = new Cookie("token", token);
-            cookieToken.setMaxAge(60*60*24);
+            cookieToken.setMaxAge(60 * 60 * 24);
             cookieToken.setHttpOnly(true);
             cookieToken.setPath("/");
             response.addCookie(cookieToken);
@@ -53,6 +55,24 @@ public class AuthController {
             return ResponseEntity.ok("");
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
+        }
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest req, HttpServletResponse response) {
+        try {
+            Cookie[] cookies = req.getCookies();
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("token")) {
+                    cookie.setValue(null);
+                    response.setHeader("token", "");
+                }
+            }
+
+            return ResponseEntity.ok("");
+
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Logout failed");
         }
     }
 }
