@@ -18,10 +18,8 @@ public class AdminController {
     }
 
     @PostMapping("/newuser")
-    public ResponseEntity addNewUser(@RequestBody AppUser appUser, String role) {
-        System.out.println(appUser);
-        System.out.println(role);
-        //adminService.addNewUser(appUser, Roles.valueOf(role));
+    public ResponseEntity addNewUser(@RequestBody AppUser appUser) {
+        adminService.addNewUser(appUser);
         return ResponseEntity.ok("");
     }
 
