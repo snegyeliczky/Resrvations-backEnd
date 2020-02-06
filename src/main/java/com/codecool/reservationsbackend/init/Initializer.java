@@ -88,7 +88,7 @@ public class Initializer {
                 AppUser adminOfAdmins = AppUser.builder()
                         .password(passwordEncoder.encode("salata"))
                         .username("cezar")
-                        .roles(Arrays.asList(Roles.ADMIN,Roles.SLAVE))
+                        .roles(Arrays.asList(Roles.values()))
                         .build();
 
                 userRepository.save(adminOfAdmins);

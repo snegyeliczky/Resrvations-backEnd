@@ -1,8 +1,8 @@
 package com.codecool.reservationsbackend.entity;
 
 public enum Roles {
-    ADMIN("Admin"),
-    SLAVE("Slave");
+    ADMIN("ROLE_ADMIN"),
+    USER("ROLE_USER");
 
 
     private String value;
