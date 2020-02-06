@@ -2,8 +2,7 @@ package com.codecool.reservationsbackend.entity;
 
 public enum Roles {
     ADMIN("ROLE_ADMIN"),
-    USER("ROLE_USER");
-
+    RECEPTIONIST("ROLE_RECEPTIONIST");
 
     private String value;
 
