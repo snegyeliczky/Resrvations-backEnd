@@ -60,48 +60,14 @@ public class JwtTokenServices {
                 }
             }
         }
-
         return null;
-
-/**
-        String bearerToken = req.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
-        }
-        return null;
-**/
-    }
-
-    public Cookie getTokenCookie(HttpServletRequest req) {
-
-        Cookie[] cookies = req.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    return cookie;
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public boolean removeTokenFromCookie(HttpServletRequest req, Cookie token) {
-
-        Cookie[] cookies = req.getCookies();
-        Arrays.stream(cookies).filter(cookie -> cookie.equals(token));
-
-        return false;
     }
 
     // checks if the token is valid and not expired.
     boolean validateToken(String token) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-            if (claims.getBody().getExpiration().before(new Date())) {
-                return false;
-            }
-            return true;
+            return !claims.getBody().getExpiration().before(new Date());
         } catch (JwtException | IllegalArgumentException e) {
             log.debug("JWT token invalid " + e);
         }
