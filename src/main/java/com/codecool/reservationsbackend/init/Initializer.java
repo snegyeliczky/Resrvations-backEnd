@@ -1,11 +1,10 @@
 package com.codecool.reservationsbackend.init;
 
 import com.codecool.reservationsbackend.entity.*;
-import com.codecool.reservationsbackend.repositories.GuestRepository;
 import com.codecool.reservationsbackend.repositories.HotelRepository;
 import com.codecool.reservationsbackend.repositories.UserRepository;
-import com.codecool.reservationsbackend.service.GuestCreator;
-import com.codecool.reservationsbackend.service.RoomCreator;
+import com.codecool.reservationsbackend.service.ReservationService;
+import com.codecool.reservationsbackend.service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,21 +26,18 @@ public class Initializer {
 
 
     @Autowired
-    private GuestRepository guestRepository;
-
-    @Autowired
     private HotelRepository hotelRepository;
 
     @Autowired
-    private GuestCreator guestCreator;
-
-    @Autowired
-    private RoomCreator roomCreator;
+    private RoomService roomService;
 
     @Autowired
     private UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private ReservationService reservationService;
 
     @Bean
     public CommandLineRunner afterInit() {
@@ -53,7 +49,7 @@ public class Initializer {
             if (hotelRepository.findAll().size() == 0) {
                 Random random = new Random();
                 List<Room> rooms = new ArrayList<>();
-                List<Guest> guests = new ArrayList<>();
+                List<Reservation> reservations = new ArrayList<>();
 
                 Hotel hotel = Hotel.builder()
                         .name("Budapest best Hotel!")
@@ -61,7 +57,7 @@ public class Initializer {
 
 
                 for (int i = 0; i < 8; i++) {
-                    Room room = roomCreator.createRoom(hotel);
+                    Room room = roomService.createRoom(hotel);
                     rooms.add(room);
                 }
 
@@ -69,32 +65,28 @@ public class Initializer {
 
                 for (int i = 0; i < 10; i++) {
 
-                    Guest guest = guestCreator.createRandomGuest(hotel);
+                    Reservation reservation = reservationService.createRandomReservation(hotel);
 
-                    if (guest.getStatus().equals(Status.IN)) {
-                        Room rom;
-                        do {
-                            rom = rooms.get(random.nextInt(rooms.size()));
-                        } while (rom.getGuest() != null);
-                        rom.setGuest(guest);
-                        guest.setRoom(rom);
-                        guest.setRoomNumber();
+                    if (reservation.getStatus().equals(Status.IN) || reservation.getStatus().equals(Status.CHECKOUT)) {
+
+                        Room randomRoom = reservationService.getAvailableRoomsByDates(reservation.getCheckIn(), reservation.getCheckOut()).get(random.nextInt(rooms.size()));
+
+                        reservation.setRoomId(randomRoom.getId());
                     }
 
 
-                    guests.add(guest);
+                    reservations.add(reservation);
                 }
 
                 AppUser adminOfAdmins = AppUser.builder()
-                        .password(passwordEncoder.encode("salata"))
                         .username("cezar")
+                        .password(passwordEncoder.encode("salata"))
                         .roles(Arrays.asList(Roles.values()))
                         .build();
 
                 userRepository.save(adminOfAdmins);
 
                 hotel.setRooms(rooms);
-                hotel.setGuests(guests);
                 hotelRepository.save(hotel);
             }
 

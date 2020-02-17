@@ -11,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    @Query("UPDATE Room r SET r.guest = null WHERE r.id = :roomId")
-    @Modifying(clearAutomatically = true)
-    int removeGuestFromRoomByRoomId(@Param("roomId") long roomId);
+//    @Query("UPDATE Room r SET r.guest = null WHERE r.id = :roomId")
+//    @Modifying(clearAutomatically = true)
+//    int removeGuestFromRoomByRoomId(@Param("roomId") long roomId);
 
-    @Query("UPDATE Room r SET r.guest = :guest WHERE r.id = :roomId")
-    @Modifying(clearAutomatically = true)
-    void setGuestByRoomId(@Param("roomId") long roomId, @Param("guest") Guest guest);
+//    @Query("UPDATE Room r SET r.guest = :guest WHERE r.id = :roomId")
+//    @Modifying(clearAutomatically = true)
+//    void setGuestByRoomId(@Param("roomId") long roomId, @Param("guest") Guest guest);
 
-    Room getRoomByGuestId(long l);
+//  Room getRoomByReservationId(long id);
 }

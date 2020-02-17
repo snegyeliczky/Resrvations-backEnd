@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,32 +18,24 @@ public class Guest {
     @GeneratedValue
     private Long id;
 
-    private String name;
+    private String firstName;
 
-    @Enumerated(EnumType.STRING)
-    private Status status;
+    private String lastName;
 
-    private LocalDate checkIn;
-
-    private LocalDate checkOut;
+    private String email;
 
     @JsonIgnore
+    @Singular
     @ToString.Exclude
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private Room room;
-
-    @JsonIgnore
-    @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    private Hotel hotel;
+    @OneToMany(mappedBy = "guest", cascade = CascadeType.PERSIST)
+    @EqualsAndHashCode.Exclude
+    private List<Reservation> reservations;
 
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.PERSIST)
     private Address address;
 
-    private Integer roomNumber;
-
-    public void setRoomNumber() {
-        this.roomNumber = room.getRoomNumber();
-    };
+    public void addReservation(Reservation reservation) {
+        this.reservations.add(reservation);
+    }
 }

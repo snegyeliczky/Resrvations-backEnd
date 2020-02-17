@@ -28,6 +28,7 @@ public class GuestRepositoryTest {
     @Autowired
     private RoomRepository roomRepository;
 
+    /*
     private Guest bela1 =  Guest.builder().checkIn(LocalDate.of(2010,2,10))
             .checkOut(LocalDate.of(2010,2,15))
             .name("Béca")
@@ -140,4 +141,6 @@ public class GuestRepositoryTest {
 
     }
 
+
+     */
 }

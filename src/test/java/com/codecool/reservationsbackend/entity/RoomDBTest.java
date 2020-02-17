@@ -34,7 +34,6 @@ public class RoomDBTest {
     @Test
     public void saveOneRoom() {
         Room roomDB = Room.builder()
-                .reserved(true)
                 .build();
 
         roomRepository.save(roomDB);

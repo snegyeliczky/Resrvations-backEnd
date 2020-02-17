@@ -27,8 +27,6 @@ public class Address {
 
     private Integer zipCode;
 
-    private String email;
-
     @JsonIgnore
     @OneToOne(cascade = CascadeType.PERSIST)
     private Guest guest;

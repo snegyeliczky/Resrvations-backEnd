@@ -28,7 +28,5 @@ public class Hotel {
     @Singular
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.PERSIST)
     @EqualsAndHashCode.Exclude
-    private List<Guest> guests;
-
-
+    private List<Reservation> reservations;
 }

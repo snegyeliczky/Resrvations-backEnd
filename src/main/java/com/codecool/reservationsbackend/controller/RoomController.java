@@ -23,7 +23,7 @@ public class RoomController {
     @Autowired
     private HotelRepository hotelRepository;
 
-    @GetMapping("/list")
+    @GetMapping("/get-all")
     public List<Room> roomList() {
         return roomRepository.findAll();
     }

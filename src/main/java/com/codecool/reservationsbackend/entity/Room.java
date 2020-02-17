@@ -20,20 +20,12 @@ public class Room {
     @Transient
     private static AtomicInteger at = new AtomicInteger(1);
 
-    private int roomNumber;
+    private int number;
 
-    private boolean reserved;
+    private int capacity;
 
-    public Room(Hotel hotel) {
-        this.roomNumber = at.getAndIncrement();
-        this.reserved = false;
-        this.hotel = hotel;
-    }
-
-    public Room() {
-        this.roomNumber = at.getAndIncrement();
-        this.reserved = false;
-    }
+    @Enumerated(EnumType.STRING)
+    private Type type;
 
     @JsonIgnore
     @ToString.Exclude
@@ -41,10 +33,13 @@ public class Room {
     private Hotel hotel;
 
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    private Guest guest;
+    //Constructors
+    public Room(Hotel hotel) {
+        this.number = at.getAndIncrement();
+        this.hotel = hotel;
+    }
 
-
-
-
+    public Room() {
+        this.number = at.getAndIncrement();
+    }
 }

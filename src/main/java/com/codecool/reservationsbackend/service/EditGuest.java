@@ -16,13 +16,12 @@ public class EditGuest {
     @Autowired
     private GuestRepository guestRepository;
 
-    public void editGuest(Guest guest) {
-        guestRepository.editGuestById(guest.getName(), guest.getId());
-        addressRepository.editAddressById(guest.getAddress().getCountry(),
-                guest.getAddress().getCity(),
-                guest.getAddress().getStreet(),
-                guest.getAddress().getZipCode(),
-                guest.getAddress().getEmail(),
-                guest.getAddress().getId());
-    }
+//    public void editGuest(Guest guest) {
+//        guestRepository.editGuestById(guest.getFirstName(), guest.getId());
+//        addressRepository.editAddressById(guest.getAddress().getCountry(),
+//                guest.getAddress().getCity(),
+//                guest.getAddress().getStreet(),
+//                guest.getAddress().getZipCode(),
+//                guest.getAddress().getId());
+//    }
 }

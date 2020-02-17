@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RoomCreator {
+public class RoomService {
 
     public Room createRoom(Hotel hotel) {
         return new Room(hotel);
     }
+
+
 
 
 }
