@@ -37,8 +37,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/auth/**").permitAll()
                 .antMatchers("/reservation/**").authenticated()
-                .antMatchers("/rooms/**").authenticated()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/users/admin/**").hasRole("ADMIN")
                 .anyRequest().denyAll()// anything else is denied
                 .and()
                 .addFilterBefore(new JwtTokenFilter(jwtTokenServices), UsernamePasswordAuthenticationFilter.class);
