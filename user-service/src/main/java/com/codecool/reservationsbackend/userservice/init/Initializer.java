@@ -32,12 +32,15 @@ public class Initializer {
         return args -> {
 
             // CREATING ADMIN
-            AppUser adminOfAdmins = AppUser.builder()
-                    .username("cezar")
-                    .password(passwordEncoder.encode("salata"))
-                    .roles(Arrays.asList(Roles.values()))
-                    .build();
-            userRepository.save(adminOfAdmins);
+            if (userRepository.findAll().size() == 0) {
+                AppUser adminOfAdmins = AppUser.builder()
+                        .username("cezar")
+                        .password(passwordEncoder.encode("salata"))
+                        .roles(Arrays.asList(Roles.values()))
+                        .build();
+                userRepository.save(adminOfAdmins);
+            }
+
         };
     }
 }

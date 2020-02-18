@@ -13,9 +13,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableSwagger2
 @EnableEurekaClient
-public class ReservationsBackendApplication {
+public class ReservationsServiceApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ReservationsBackendApplication.class, args);
+        SpringApplication.run(ReservationsServiceApplication.class, args);
 
     }
 
