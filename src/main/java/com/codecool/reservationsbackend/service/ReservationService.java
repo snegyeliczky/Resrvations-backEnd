@@ -54,14 +54,14 @@ public class ReservationService {
 
     public Reservation createRandomReservation(Hotel hotel) {
         List<LocalDate> dates = randomDateCreator.dateCreator();
-
-        return Reservation.builder()
+        Reservation reservation = Reservation.builder()
                 .checkIn(dates.get(0))
                 .checkOut(dates.get(1))
-                .status(Status.values()[random.nextInt(Status.values().length)])
                 .hotel(hotel)
-                .guest(guestService.createRandomGuest())
+                .status(Status.values()[random.nextInt(Status.values().length)])
                 .build();
+        //reservationRepository.save(reservation);
+        return reservation;
 
     }
 

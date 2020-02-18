@@ -26,7 +26,7 @@ public class Hotel {
     private List<Room> rooms;
 
     @Singular
-    @OneToMany(mappedBy = "hotel", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.MERGE)
     @EqualsAndHashCode.Exclude
     private List<Reservation> reservations;
 }

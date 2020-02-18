@@ -18,7 +18,7 @@ import java.util.UUID;
 @Component
 public class GuestService {
 
-    private static List<String> firstNames = Arrays.asList("Joco", "Misi", "Béla", "Füles", "Réka", "Ákos", "Ürsiklosi", "Sándi", "Peti", "Megatron,");
+    private static List<String> firstNames = Arrays.asList("Joco", "Misi", "Béla", "Füles", "Réka", "Ákos", "Ürsiklosi", "Sándi", "Peti", "Megatron");
 
     private static List<String> lastNames = Arrays.asList("Gáspár", "Lakatos", "Kovács", "Julius", "Horváth", "Oláh", "Varga", "Balogh", "Orbán");
 
@@ -31,12 +31,13 @@ public class GuestService {
 
         String firstName = firstNames.get(random.nextInt(firstNames.size()));
         String lastName = lastNames.get(random.nextInt(lastNames.size()));
-
-        return Guest.builder()
+        Guest guest = Guest.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(firstName + UUID.randomUUID().toString().substring(0, 8) + "@gmail.com")
+                .address(Address.builder().build())
                 .build();
+        return guest;
     }
 
     public void addGuest(Guest guest, Address address) {

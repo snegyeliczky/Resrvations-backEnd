@@ -12,13 +12,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Builder
 @Entity
 public class Room {
-
     @Id
     @GeneratedValue
     private Long id;
 
     @Transient
-    private static AtomicInteger at = new AtomicInteger(1);
+    private static AtomicInteger at = new AtomicInteger(0);
 
     private int number;
 

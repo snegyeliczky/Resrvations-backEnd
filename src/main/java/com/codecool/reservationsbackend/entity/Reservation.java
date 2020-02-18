@@ -12,8 +12,6 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Entity
 public class Reservation {
-
-
     @Id
     @GeneratedValue
     private Long id;
@@ -40,7 +38,7 @@ public class Reservation {
 
     @JsonIgnore
     @ToString.Exclude
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne(cascade = CascadeType.MERGE)
     private Hotel hotel;
 
 
