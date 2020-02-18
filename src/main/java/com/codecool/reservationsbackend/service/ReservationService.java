@@ -69,15 +69,16 @@ public class ReservationService {
 
         List<Reservation> reservations = reservationRepository.getUnavailableReservationsByCheckInAndCheckOut(checkIn, checkOut);
         List<Room> availableRooms = roomRepository.findAll();
-
-        for (Reservation reservation : reservations) {
-            if (reservation.getRoomId() != null) {
-                Room room = roomRepository.getOne(reservation.getRoomId());
-                if (room != null)
-                    availableRooms.remove(room);
+        if (reservations != null) {
+            for (Reservation reservation : reservations) {
+                if (reservation.getRoomId() != null) {
+                    Room room = roomRepository.getOne(reservation.getRoomId());
+                    if (room != null)
+                        availableRooms.remove(room);
+                }
             }
-
         }
+
 
         return availableRooms;
     }

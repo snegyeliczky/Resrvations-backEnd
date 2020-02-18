@@ -26,10 +26,9 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     int updateRoom(@Param("roomId") Long roomId, @Param("reservationId") long reservationId);
 
 
-//    @Query("SELECT Reservation FROM Reservation r WHERE (r.checkIn <= :checkIn AND r.checkOut >= :checkIn)" +
-//            " OR (r.checkIn < :checkOut AND r.checkOut >= :checkOut)" +
-//            " OR (:checkIn <= r.checkIn AND :checkOut >= r.checkIn)")
-    @Query("SELECT Reservation FROM Reservation")
+    @Query("SELECT r FROM Reservation r WHERE (r.checkIn <= :checkIn AND r.checkOut >= :checkIn)" +
+            " OR (r.checkIn < :checkOut AND r.checkOut >= :checkOut)" +
+            " OR (:checkIn <= r.checkIn AND :checkOut >= r.checkIn)")
     List<Reservation> getUnavailableReservationsByCheckInAndCheckOut(@Param("checkIn") LocalDate checkIn, @Param("checkOut") LocalDate checkOut);
 
 

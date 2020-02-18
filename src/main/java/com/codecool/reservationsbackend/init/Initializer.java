@@ -2,6 +2,7 @@ package com.codecool.reservationsbackend.init;
 
 import com.codecool.reservationsbackend.entity.*;
 import com.codecool.reservationsbackend.repositories.HotelRepository;
+import com.codecool.reservationsbackend.repositories.RoomRepository;
 import com.codecool.reservationsbackend.repositories.UserRepository;
 import com.codecool.reservationsbackend.service.ReservationService;
 import com.codecool.reservationsbackend.service.RoomService;
@@ -34,6 +35,9 @@ public class Initializer {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoomRepository roomRepository;
+
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -60,6 +64,7 @@ public class Initializer {
                     Room room = roomService.createRoom(hotel);
                     rooms.add(room);
                 }
+                roomRepository.saveAll(rooms);
 
 
 
@@ -69,7 +74,11 @@ public class Initializer {
 
                     if (reservation.getStatus().equals(Status.IN) || reservation.getStatus().equals(Status.CHECKOUT)) {
 
-                        Room randomRoom = reservationService.getAvailableRoomsByDates(reservation.getCheckIn(), reservation.getCheckOut()).get(random.nextInt(rooms.size()));
+                        Room randomRoom = reservationService
+                                .getAvailableRoomsByDates(
+                                        reservation.getCheckIn(),
+                                        reservation.getCheckOut())
+                                .get(random.nextInt(rooms.size()));
 
                         reservation.setRoomId(randomRoom.getId());
                     }
