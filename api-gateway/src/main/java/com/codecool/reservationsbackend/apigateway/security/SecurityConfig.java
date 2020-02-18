@@ -36,8 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/auth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/auth/**").permitAll()
-                .antMatchers("/add/**").authenticated()
-                .antMatchers("/guest/**").authenticated()
+                .antMatchers("/reservation/**").authenticated()
                 .antMatchers("/rooms/**").authenticated()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().denyAll()// anything else is denied
