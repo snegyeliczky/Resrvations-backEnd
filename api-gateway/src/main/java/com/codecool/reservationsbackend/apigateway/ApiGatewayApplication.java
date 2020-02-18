@@ -1,0 +1,72 @@
+package com.codecool.reservationsbackend.apigateway;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
+import org.springframework.cloud.netflix.zuul.filters.ZuulProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
+import org.springframework.web.client.RestTemplate;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.SwaggerResource;
+import springfox.documentation.swagger.web.SwaggerResourcesProvider;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@SpringBootApplication
+@EnableSwagger2
+@EnableEurekaClient
+@EnableZuulProxy
+public class ApiGatewayApplication {
+
+    @Autowired
+    ZuulProperties properties;
+
+    public static void main(String[] args) {
+        SpringApplication.run(ApiGatewayApplication.class, args);
+    }
+
+    @Bean
+    public Docket api() {
+        return new Docket(DocumentationType.SWAGGER_2).
+                select()
+                .apis(RequestHandlerSelectors.any())
+                .paths(PathSelectors.any())
+                .build();
+    }
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
+    @Primary
+    @Bean
+    public SwaggerResourcesProvider swaggerResourcesProvider() {
+        return () -> {
+            List<SwaggerResource> resources = new ArrayList<>();
+            properties.getRoutes().values()
+                    .forEach(route -> resources
+                            .add(createResource(route.getServiceId(), route.getServiceId(), "2.0")));
+            return resources;
+        };
+    }
+
+    private SwaggerResource createResource(String name, String location, String version) {
+        SwaggerResource swaggerResource = new SwaggerResource();
+        swaggerResource.setName(name);
+        swaggerResource.setLocation("/" + location + "/v2/api-docs");
+        swaggerResource.setSwaggerVersion(version);
+        return swaggerResource;
+    }
+
+}
