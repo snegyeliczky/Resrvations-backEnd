@@ -45,6 +45,7 @@ public class AuthController {
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
 
+
             String token = jwtTokenServices.createToken(username, roles);
             Cookie cookieToken = new Cookie("token", token);
             cookieToken.setMaxAge(60 * 60 * 24);
@@ -52,7 +53,7 @@ public class AuthController {
             cookieToken.setPath("/");
             response.addCookie(cookieToken);
 
-            return ResponseEntity.ok("");
+            return ResponseEntity.ok(roles);
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username/password supplied");
         }
