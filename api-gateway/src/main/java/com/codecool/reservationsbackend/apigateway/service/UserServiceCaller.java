@@ -16,7 +16,7 @@ public class UserServiceCaller {
     private String baseUrl;
 
     public AppUser findAppUserByUsername(String username) {
-        return restTemplate.getForEntity(baseUrl + "/" + username, AppUser.class).getBody();
+        return restTemplate.getForEntity(baseUrl + "users/" + username, AppUser.class).getBody();
     }
 
 }
