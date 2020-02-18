@@ -1,4 +1,4 @@
-package com.codecool.reservationsbackend.service;
+package com.codecool.reservationsbackend.apigateway.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

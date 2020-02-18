@@ -1,9 +1,7 @@
-package com.codecool.reservationsbackend.controller;
+package com.codecool.reservationsbackend.apigateway.controller;
 
-import com.codecool.reservationsbackend.security.JwtTokenServices;
-import com.codecool.reservationsbackend.service.UserCredentials;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import com.codecool.reservationsbackend.apigateway.model.UserCredentials;
+import com.codecool.reservationsbackend.apigateway.security.JwtTokenServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 

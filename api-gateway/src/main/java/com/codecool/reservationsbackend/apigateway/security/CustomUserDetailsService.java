@@ -1,7 +1,8 @@
-package com.codecool.reservationsbackend.security;
+package com.codecool.reservationsbackend.apigateway.security;
 
-import com.codecool.reservationsbackend.entity.AppUser;
-import com.codecool.reservationsbackend.repositories.UserRepository;
+import com.codecool.reservationsbackend.apigateway.service.UserServiceCaller;
+import com.codecool.reservationsbackend.userservice.entity.AppUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,18 +15,15 @@ import java.util.stream.Collectors;
 @Component
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UserRepository users;
-
-    public CustomUserDetailsService(UserRepository users) {
-        this.users = users;
-    }
+    @Autowired
+    private UserServiceCaller userService;
 
     /**
      * Loads the user from the DB and converts it to Spring Security's internal User object
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = users.findByUsername(username);
+        AppUser appUser = userService.findAppUserByUsername(username);
         if (appUser == null) {
             throw (new UsernameNotFoundException("Username: " + username + " not found"));
         }

@@ -1,4 +1,4 @@
-package com.codecool.reservationsbackend.security;
+package com.codecool.reservationsbackend.apigateway.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

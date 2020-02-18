@@ -34,23 +34,16 @@ public class Initializer {
     private RoomService roomService;
 
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private RoomRepository roomRepository;
 
     @Autowired
     private ReservationRepository reservationRepository;
-
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private ReservationService reservationService;
 
     @Bean
     public CommandLineRunner afterInit() {
-
-        passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
         return args -> {
             if (hotelRepository.findAll().size() == 0) {
@@ -102,15 +95,6 @@ public class Initializer {
                 hotel.setReservations(reservations);
                 reservationRepository.saveAll(reservations);
                 hotelRepository.save(hotel);
-
-
-                // CREATING ADMIN
-                AppUser adminOfAdmins = AppUser.builder()
-                        .username("cezar")
-                        .password(passwordEncoder.encode("salata"))
-                        .roles(Arrays.asList(Roles.values()))
-                        .build();
-                userRepository.save(adminOfAdmins);
             }
         };
     }
