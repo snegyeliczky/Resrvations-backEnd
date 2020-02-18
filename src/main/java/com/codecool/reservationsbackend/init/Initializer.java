@@ -101,7 +101,6 @@ public class Initializer {
 
                 hotel.setReservations(reservations);
                 reservationRepository.saveAll(reservations);
-                log.info(hotel.getReservations().get(0).toString());
                 hotelRepository.save(hotel);
 
 
