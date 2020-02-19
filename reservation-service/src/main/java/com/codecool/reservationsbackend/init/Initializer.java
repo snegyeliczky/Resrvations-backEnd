@@ -97,6 +97,8 @@ public class Initializer {
                             .hotel(hotel)
                             .status(Status.values()[i % 2 == 0 ? 0 : 1])
                             .guest(guestService.createRandomGuest())
+                            .price(random.nextDouble() + 20000000)
+                            .paymentMethod(PaymentMethod.values()[random.nextInt(PaymentMethod.values().length)])
                             .build();
                     addRoomToReservation(random, reservations, reservation);
                 }

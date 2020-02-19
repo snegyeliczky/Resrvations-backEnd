@@ -59,6 +59,8 @@ public class ReservationService {
                 .checkIn(dates.get(0))
                 .checkOut(dates.get(1))
                 .hotel(hotel)
+                .price(random.nextDouble() + 20000000)
+                .paymentMethod(PaymentMethod.values()[random.nextInt(PaymentMethod.values().length)])
                 .status(Status.values()[random.nextInt(Status.values().length)])
                 .build();
 
