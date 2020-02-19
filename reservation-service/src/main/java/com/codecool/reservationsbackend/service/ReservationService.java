@@ -22,6 +22,9 @@ public class ReservationService {
     private static List<String> lastNames = Arrays.asList("Gáspár", "Lakatos", "Kovács", "Julius", "Horváth", "Oláh", "Varga", "Balogh", "Orbán");
 
     @Autowired
+    private GuestService guestService;
+
+    @Autowired
     private RandomDateCreator randomDateCreator;
 
     @Autowired
@@ -42,6 +45,7 @@ public class ReservationService {
         Guest guestByEmail = guestRepository.findGuestByEmail(reservation.getGuest().getEmail());
 
         if (guestByEmail == null) {
+            reservation.getGuest().getAddress().setGuest(reservation.getGuest());
             guestRepository.save(reservation.getGuest());
             guestByEmail = guestRepository.findGuestByEmail(reservation.getGuest().getEmail());
         }
@@ -54,8 +58,7 @@ public class ReservationService {
 
     public Reservation createRandomReservation(Hotel hotel) {
         List<LocalDate> dates = randomDateCreator.dateCreator();
-        //reservationRepository.save(reservation);
-        return Reservation.builder()
+        Reservation reservation = Reservation.builder()
                 .checkIn(dates.get(0))
                 .checkOut(dates.get(1))
                 .hotel(hotel)
@@ -63,6 +66,7 @@ public class ReservationService {
                 .paymentMethod(PaymentMethod.values()[random.nextInt(PaymentMethod.values().length)])
                 .status(Status.values()[random.nextInt(Status.values().length)])
                 .build();
+        return reservation;
 
     }
 

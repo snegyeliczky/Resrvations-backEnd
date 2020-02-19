@@ -73,6 +73,7 @@ public class Initializer {
                 // CREATING GUESTS
                 for (int i = 0; i < 10; i++) {
                     Guest guest = guestService.createRandomGuest();
+                    guest.getAddress().setGuest(guest);
                     guests.add(guest);
                 }
 
@@ -89,6 +90,8 @@ public class Initializer {
                 }
 
                 for (int i = 0; i < 4; i++) {
+                    Guest guest = guestService.createRandomGuest();
+
                     Reservation reservation = Reservation.builder()
                             .checkIn(LocalDate.now())
                             .checkOut(LocalDate.ofEpochDay(ThreadLocalRandom.current()
@@ -96,10 +99,11 @@ public class Initializer {
                                     LocalDate.now().toEpochDay() + 15)) )
                             .hotel(hotel)
                             .status(Status.values()[i % 2 == 0 ? 0 : 1])
-                            .guest(guestService.createRandomGuest())
+                            .guest(guest)
                             .price((random.nextDouble() + 2000))
                             .paymentMethod(PaymentMethod.values()[random.nextInt(PaymentMethod.values().length)])
                             .build();
+                    reservation.getGuest().getAddress().setGuest(guest);
                     addRoomToReservation(random, reservations, reservation);
                 }
 
