@@ -3,6 +3,7 @@ package com.codecool.reservationsbackend.service;
 
 import com.codecool.reservationsbackend.entity.*;
 import com.codecool.reservationsbackend.repositories.GuestRepository;
+import com.codecool.reservationsbackend.repositories.HotelRepository;
 import com.codecool.reservationsbackend.repositories.ReservationRepository;
 import com.codecool.reservationsbackend.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
 
     @Autowired
-    private GuestService guestService;
+    private HotelRepository hotelRepository;
 
     @Autowired
     private RoomRepository roomRepository;
@@ -41,12 +42,11 @@ public class ReservationService {
         Guest guestByEmail = guestRepository.findGuestByEmail(reservation.getGuest().getEmail());
 
         if (guestByEmail == null) {
-            assert false;
-            guestByEmail.setAddress(guestByEmail.getAddress());
-            guestByEmail.getAddress().setGuest(guestByEmail);
             guestRepository.save(reservation.getGuest());
             guestByEmail = guestRepository.findGuestByEmail(reservation.getGuest().getEmail());
         }
+        reservation.setHotel(hotelRepository.findAll().get(0));
+        reservation.setStatus(Status.CHECKIN);
         reservation.setGuest(guestByEmail);
         guestByEmail.addReservation(reservation);
         reservationRepository.save(reservation);
