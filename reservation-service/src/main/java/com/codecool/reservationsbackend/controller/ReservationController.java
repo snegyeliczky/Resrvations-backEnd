@@ -6,14 +6,16 @@ import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.repositories.ReservationRepository;
 import com.codecool.reservationsbackend.repositories.RoomRepository;
 import com.codecool.reservationsbackend.service.ReservationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-
+@Slf4j
 @CrossOrigin
 @RestController
 public class ReservationController {
@@ -37,11 +39,13 @@ public class ReservationController {
         reservationService.addNewReservation(reservation);
     }
 
-    @GetMapping("/{reservationId}")
-    public Reservation getReservationById(@PathVariable("reservationId") Long reservationId) {
-        return reservationRepository.getOne(reservationId);
+    @GetMapping("/get-reservation")
+    public Reservation getReservationById(@RequestParam(value = "reservationId") String reservationId) {
+        log.info(reservationId);
+        Reservation reservation = reservationRepository.getOne(Long.parseLong(reservationId));
+        log.info(reservation.toString());
+        return reservation;
     }
-
 
     @GetMapping("/checkin")
     public List<Reservation> checkInList(
