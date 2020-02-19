@@ -14,10 +14,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Configuration
 @Slf4j
@@ -77,25 +79,48 @@ public class Initializer {
                 // CREATING RESERVATIONS AND IT'S GUESTS
                 for (int i = 0; i < 10; i++) {
                     Reservation reservation = reservationService.createRandomReservation(hotel);
-                    if (reservation.getStatus().equals(Status.IN)) {
-                        List<Room> availableRooms = reservationService.getAvailableRoomsByDates(
-                                reservation.getCheckIn(),
-                                reservation.getCheckOut());
-                        Room randomRoom = availableRooms.get(random.nextInt(availableRooms.size()));
-                        reservation.setRoomId(randomRoom.getId());
-                    }
-                    reservations.add(reservation);
+                    addRoomToReservation(random, reservations, reservation);
                 }
+
 
                 for (int i = 0; i < reservations.size(); i++) {
                     reservations.get(i).setGuest(guests.get(i));
                     guests.get(i).setReservations(Arrays.asList(reservations.get(i)));
                 }
 
+                for (int i = 0; i < 4; i++) {
+                    Reservation reservation = Reservation.builder()
+                            .checkIn(LocalDate.now())
+                            .checkOut(LocalDate.ofEpochDay(ThreadLocalRandom.current()
+                                    .nextLong(LocalDate.now().toEpochDay() + 1,
+                                    LocalDate.now().toEpochDay() + 15)) )
+                            .hotel(hotel)
+                            .status(Status.values()[i % 2 == 0 ? 0 : 1])
+                            .guest(guestService.createRandomGuest())
+                            .build();
+                    addRoomToReservation(random, reservations, reservation);
+                }
+
+
+
+
+
                 hotel.setReservations(reservations);
                 reservationRepository.saveAll(reservations);
                 hotelRepository.save(hotel);
             }
         };
+    }
+
+    private void addRoomToReservation(Random random, List<Reservation> reservations, Reservation reservation) {
+        if (reservation.getStatus().equals(Status.IN)) {
+            List<Room> availableRooms = reservationService.getAvailableRoomsByDates(
+                    reservation.getCheckIn(),
+                    reservation.getCheckOut());
+            Room randomRoom = availableRooms.get(random.nextInt(availableRooms.size()));
+            reservation.setRoomId(randomRoom.getId());
+        }
+
+        reservations.add(reservation);
     }
 }

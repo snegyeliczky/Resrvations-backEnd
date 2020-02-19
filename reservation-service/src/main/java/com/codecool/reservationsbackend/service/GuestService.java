@@ -31,13 +31,12 @@ public class GuestService {
 
         String firstName = firstNames.get(random.nextInt(firstNames.size()));
         String lastName = lastNames.get(random.nextInt(lastNames.size()));
-        Guest guest = Guest.builder()
+        return Guest.builder()
                 .firstName(firstName)
                 .lastName(lastName)
                 .email(firstName + UUID.randomUUID().toString().substring(0, 8) + "@gmail.com")
                 .address(Address.builder().build())
                 .build();
-        return guest;
     }
 
     public void addGuest(Guest guest, Address address) {

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 @Configuration
 @Slf4j
@@ -39,6 +40,13 @@ public class Initializer {
                         .roles(Arrays.asList(Roles.values()))
                         .build();
                 userRepository.save(adminOfAdmins);
+
+                AppUser testUser = AppUser.builder()
+                        .username("peti")
+                        .password(passwordEncoder.encode("almafa"))
+                        .roles(Collections.singletonList(Roles.RECEPTIONIST))
+                        .build();
+                userRepository.save(testUser);
             }
 
         };
