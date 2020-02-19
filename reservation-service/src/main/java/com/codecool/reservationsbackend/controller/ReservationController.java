@@ -37,6 +37,12 @@ public class ReservationController {
         reservationService.addNewReservation(reservation);
     }
 
+    @GetMapping("/{reservationId}")
+    public Reservation getReservationById(@PathVariable("reservationId") Long reservationId) {
+        return reservationRepository.getOne(reservationId);
+    }
+
+
     @GetMapping("/checkin")
     public List<Reservation> checkInList(
             @RequestParam(value = "date", required = false) String date) {
