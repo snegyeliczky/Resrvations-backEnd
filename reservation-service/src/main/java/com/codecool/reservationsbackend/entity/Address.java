@@ -25,7 +25,7 @@ public class Address {
 
     private String street;
 
-    private Integer zipCode;
+    private String zipCode;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.PERSIST)
