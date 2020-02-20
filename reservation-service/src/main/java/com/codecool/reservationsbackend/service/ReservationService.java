@@ -9,6 +9,7 @@ import com.codecool.reservationsbackend.repositories.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -17,12 +18,8 @@ import java.util.Random;
 @Component
 public class ReservationService {
 
-    private static List<String> firstNames = Arrays.asList("Joco", "Misi", "Béla", "Füles", "Réka", "Ákos", "Ürsiklosi", "Sándi", "Peti", "Megatron,");
-
-    private static List<String> lastNames = Arrays.asList("Gáspár", "Lakatos", "Kovács", "Julius", "Horváth", "Oláh", "Varga", "Balogh", "Orbán");
-
     @Autowired
-    private GuestService guestService;
+    private EntityManager entityManager;
 
     @Autowired
     private RandomDateCreator randomDateCreator;
@@ -87,4 +84,9 @@ public class ReservationService {
 
         return availableRooms;
     }
+
+    public void updateReservation(Reservation reservation) {
+        reservationRepository.save(reservation);
+    }
+
 }

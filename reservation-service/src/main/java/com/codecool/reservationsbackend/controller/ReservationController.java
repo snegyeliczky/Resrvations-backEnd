@@ -57,6 +57,11 @@ public class ReservationController {
         return reservationRepository.findByCheckInEquals(localDate);
     }
 
+    @PutMapping("/update")
+    public void updateReservation(@RequestBody Reservation reservation) {
+        reservationService.updateReservation(reservation);
+    }
+
     /*
     @GetMapping("/in")
     public List<Guest> inList(@RequestParam(value = "date", required = false) String date) {
