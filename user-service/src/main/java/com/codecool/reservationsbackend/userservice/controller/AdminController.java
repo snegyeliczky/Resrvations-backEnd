@@ -23,7 +23,7 @@ public class AdminController {
             adminService.addNewUser(appUser);
             return ResponseEntity.ok("");
         }
-        return new ResponseEntity<>("User already exists", HttpStatus.CONFLICT);
+        throw new IllegalArgumentException("user all ready exist! ");
     }
 
 }
