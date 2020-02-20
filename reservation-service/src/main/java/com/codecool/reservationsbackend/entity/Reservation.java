@@ -27,6 +27,8 @@ public class Reservation {
 
     private Double price;
 
+    private Double payed = 0.00;
+
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
