@@ -2,13 +2,11 @@ package com.codecool.reservationsbackend.service;
 
 
 import com.codecool.reservationsbackend.entity.*;
-import com.codecool.reservationsbackend.repositories.GuestRepository;
-import com.codecool.reservationsbackend.repositories.HotelRepository;
-import com.codecool.reservationsbackend.repositories.ReservationRepository;
-import com.codecool.reservationsbackend.repositories.RoomRepository;
+import com.codecool.reservationsbackend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,12 +17,8 @@ import java.util.stream.Collectors;
 @Component
 public class ReservationService {
 
-    private static List<String> firstNames = Arrays.asList("Joco", "Misi", "Béla", "Füles", "Réka", "Ákos", "Ürsiklosi", "Sándi", "Peti", "Megatron,");
-
-    private static List<String> lastNames = Arrays.asList("Gáspár", "Lakatos", "Kovács", "Julius", "Horváth", "Oláh", "Varga", "Balogh", "Orbán");
-
     @Autowired
-    private GuestService guestService;
+    private AddressRepository addressRepository;
 
     @Autowired
     private RandomDateCreator randomDateCreator;
@@ -104,4 +98,11 @@ public class ReservationService {
         }
         return freeRooms;
     }
+
+    public void updateReservation(Reservation reservation) {
+        addressRepository.save(reservation.getGuest().getAddress());
+        guestRepository.save(reservation.getGuest());
+        reservationRepository.save(reservation);
+    }
+
 }

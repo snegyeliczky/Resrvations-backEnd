@@ -57,6 +57,11 @@ public class ReservationController {
         return reservationRepository.findByCheckInEquals(localDate);
     }
 
+    @PutMapping("/update")
+    public void updateReservation(@RequestBody Reservation reservation) {
+        reservationService.updateReservation(reservation);
+    }
+
     /*
     @GetMapping("/in")
     public List<Guest> inList(@RequestParam(value = "date", required = false) String date) {
@@ -93,6 +98,9 @@ public class ReservationController {
                 roomRepository.findAll().stream().anyMatch(room1 -> room1.getId().equals(Long.parseLong(roomId)))) {
             Room room = roomRepository.getOne(Long.parseLong(roomId));
             reservationRepository.updateRoom(room.getId(), Long.parseLong(reservationId));
+        }
+        if (roomId.equals("-")) {
+            reservationRepository.updateRoom(null, Long.parseLong(reservationId));
         }
     }
 
