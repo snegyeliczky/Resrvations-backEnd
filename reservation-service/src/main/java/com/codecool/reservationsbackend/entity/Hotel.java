@@ -4,6 +4,7 @@ package com.codecool.reservationsbackend.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,10 +24,10 @@ public class Hotel {
     @Singular
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.PERSIST)
     @EqualsAndHashCode.Exclude
-    private List<Room> rooms;
+    private List<Room> rooms = new ArrayList<>();
 
     @Singular
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.MERGE)
     @EqualsAndHashCode.Exclude
-    private List<Reservation> reservations;
+    private List<Reservation> reservations = new ArrayList<>();
 }
