@@ -5,6 +5,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Data
@@ -29,7 +31,7 @@ public class Guest {
     @ToString.Exclude
     @OneToMany(mappedBy = "guest", cascade = CascadeType.PERSIST)
     @EqualsAndHashCode.Exclude
-    private List<Reservation> reservations;
+    private List<Reservation> reservations = new LinkedList<>();
 
     @ToString.Exclude
     @OneToOne(cascade = CascadeType.PERSIST)
