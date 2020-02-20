@@ -8,9 +8,11 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Component
 public class ReservationService {
@@ -77,9 +79,24 @@ public class ReservationService {
                 }
             }
         }
-
-
         return availableRooms;
+    }
+
+    public List<Room> getAvailableRoomIdsForToday(LocalDate date) {
+
+        List<Reservation> checkIns = reservationRepository.findByCheckInEquals(date);
+        List<Long> reservedRoomIdes = checkIns.stream()
+                .map(Reservation::getRoomId)
+                .collect(Collectors.toList());
+
+        List<Room> allRooms = roomRepository.findAll();
+        ArrayList<Room> freeRooms = new ArrayList<>();
+            for (Room room:allRooms) {
+                if (!reservedRoomIdes.contains(room.getId())){
+                    freeRooms.add(room);
+                }
+        }
+        return freeRooms;
     }
 
     public void updateReservation(Reservation reservation) {
