@@ -94,13 +94,15 @@ public class ReservationController {
 
     @PutMapping("/setroom")
     public void setRoom(@RequestParam(value = "roomId") String roomId, @RequestParam(value = "reservationId") String reservationId) {
-        if (!roomId.equals("") &&
+
+        if (roomId.equals("-")) {
+            reservationRepository.updateRoom(null, Long.parseLong(reservationId));
+        }
+
+        if (!roomId.equals("-") &&!roomId.equals("") &&
                 roomRepository.findAll().stream().anyMatch(room1 -> room1.getId().equals(Long.parseLong(roomId)))) {
             Room room = roomRepository.getOne(Long.parseLong(roomId));
             reservationRepository.updateRoom(room.getId(), Long.parseLong(reservationId));
-        }
-        if (roomId.equals("-")) {
-            reservationRepository.updateRoom(null, Long.parseLong(reservationId));
         }
     }
 
