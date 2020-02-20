@@ -99,6 +99,9 @@ public class ReservationController {
             Room room = roomRepository.getOne(Long.parseLong(roomId));
             reservationRepository.updateRoom(room.getId(), Long.parseLong(reservationId));
         }
+        if (roomId.equals("-")) {
+            reservationRepository.updateRoom(null, Long.parseLong(reservationId));
+        }
     }
 
     /*
