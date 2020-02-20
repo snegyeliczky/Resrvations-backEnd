@@ -2,10 +2,7 @@ package com.codecool.reservationsbackend.service;
 
 
 import com.codecool.reservationsbackend.entity.*;
-import com.codecool.reservationsbackend.repositories.GuestRepository;
-import com.codecool.reservationsbackend.repositories.HotelRepository;
-import com.codecool.reservationsbackend.repositories.ReservationRepository;
-import com.codecool.reservationsbackend.repositories.RoomRepository;
+import com.codecool.reservationsbackend.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +16,7 @@ import java.util.Random;
 public class ReservationService {
 
     @Autowired
-    private EntityManager entityManager;
+    private AddressRepository addressRepository;
 
     @Autowired
     private RandomDateCreator randomDateCreator;
@@ -86,6 +83,8 @@ public class ReservationService {
     }
 
     public void updateReservation(Reservation reservation) {
+        addressRepository.save(reservation.getGuest().getAddress());
+        guestRepository.save(reservation.getGuest());
         reservationRepository.save(reservation);
     }
 
