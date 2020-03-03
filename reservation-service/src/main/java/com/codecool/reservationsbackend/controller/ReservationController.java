@@ -41,9 +41,7 @@ public class ReservationController {
 
     @GetMapping("/get-reservation")
     public Reservation getReservationById(@RequestParam(value = "reservationId") String reservationId) {
-        log.info(reservationId);
         Reservation reservation = reservationRepository.getOne(Long.parseLong(reservationId));
-        log.info(reservation.toString());
         return reservation;
     }
 
@@ -60,6 +58,7 @@ public class ReservationController {
     @PutMapping("/update")
     public void updateReservation(@RequestBody Reservation reservation) {
         reservationService.updateReservation(reservation);
+
     }
 
     /*

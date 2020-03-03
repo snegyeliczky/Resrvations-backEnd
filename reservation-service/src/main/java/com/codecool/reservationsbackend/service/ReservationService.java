@@ -3,13 +3,11 @@ package com.codecool.reservationsbackend.service;
 
 import com.codecool.reservationsbackend.entity.*;
 import com.codecool.reservationsbackend.repositories.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -99,10 +97,10 @@ public class ReservationService {
         return freeRooms;
     }
 
+
     public void updateReservation(Reservation reservation) {
         addressRepository.save(reservation.getGuest().getAddress());
         guestRepository.save(reservation.getGuest());
         reservationRepository.save(reservation);
     }
-
 }
