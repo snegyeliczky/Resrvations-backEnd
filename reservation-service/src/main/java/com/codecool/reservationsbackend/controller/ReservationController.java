@@ -109,4 +109,10 @@ public class ReservationController {
     @PutMapping("/edit")
     public void e1ditGuest(@RequestBody Guest guest) { editGuest.editGuest(guest); }
      */
+
+    @GetMapping("/active-reservations")
+    public List<Reservation> activeReservations(@RequestParam(value = "date") String date) {
+        LocalDate localDate = LocalDate.parse(date);
+        return reservationRepository.getUnavailableReservationsByCheckInAndCheckOut(localDate, localDate.plusDays(1));
+    }
 }
