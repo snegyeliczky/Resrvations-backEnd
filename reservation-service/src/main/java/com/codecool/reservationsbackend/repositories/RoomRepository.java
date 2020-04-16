@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
 
-
 //    @Query("UPDATE Room r SET r.guest = null WHERE r.id = :roomId")
 //    @Modifying(clearAutomatically = true)
 //    int removeGuestFromRoomByRoomId(@Param("roomId") long roomId);

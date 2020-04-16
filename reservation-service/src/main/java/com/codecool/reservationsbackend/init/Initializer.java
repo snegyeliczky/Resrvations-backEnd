@@ -96,7 +96,7 @@ public class Initializer {
                             .checkIn(LocalDate.now())
                             .checkOut(LocalDate.ofEpochDay(ThreadLocalRandom.current()
                                     .nextLong(LocalDate.now().toEpochDay() + 1,
-                                    LocalDate.now().toEpochDay() + 15)) )
+                                            LocalDate.now().toEpochDay() + 15)))
                             .hotel(hotel)
                             .status(Status.values()[i % 2 == 0 ? 0 : 1])
                             .guest(guest)
@@ -106,9 +106,6 @@ public class Initializer {
                     reservation.getGuest().getAddress().setGuest(guest);
                     addRoomToReservation(random, reservations, reservation);
                 }
-
-
-
 
 
                 hotel.setReservations(reservations);

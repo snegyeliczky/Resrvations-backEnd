@@ -32,10 +32,10 @@ public class RoomController {
     public List<Room> getAvailableRoomsByDates(@RequestParam(value = "checkin") String checkIn,
                                                @RequestParam(value = "checkout", required = false) String checkOut) {
         LocalDate checkInDate = LocalDate.parse(checkIn);
-        if (StringUtils.isEmpty(checkOut)){
+        if (StringUtils.isEmpty(checkOut)) {
             return reservationService.getAvailableRoomsByDates(checkInDate, checkInDate.plusDays(1));
 
-        }else {
+        } else {
             LocalDate checkOutDate = LocalDate.parse(checkOut);
             return reservationService.getAvailableRoomsByDates(checkInDate, checkOutDate);
         }

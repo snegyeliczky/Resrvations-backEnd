@@ -2,6 +2,7 @@ package com.codecool.reservationsbackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.models.Contact;
 import lombok.*;
 
 import javax.persistence.*;
@@ -44,6 +45,5 @@ public class Reservation {
     @ToString.Exclude
     @ManyToOne(cascade = CascadeType.MERGE)
     private Hotel hotel;
-
 
 }

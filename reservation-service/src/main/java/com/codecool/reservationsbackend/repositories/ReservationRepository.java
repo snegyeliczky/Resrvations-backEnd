@@ -32,6 +32,4 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> getUnavailableReservationsByCheckInAndCheckOut(@Param("checkIn") LocalDate checkIn, @Param("checkOut") LocalDate checkOut);
 
 
-
-
 }

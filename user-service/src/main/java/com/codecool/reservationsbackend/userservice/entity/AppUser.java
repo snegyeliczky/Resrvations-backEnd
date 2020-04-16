@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.tomcat.jni.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -34,6 +35,7 @@ public class AppUser {
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private List<Roles> roles = new ArrayList<>();
+
 
     public List<String> getRolesInString() {
         return roles.stream()

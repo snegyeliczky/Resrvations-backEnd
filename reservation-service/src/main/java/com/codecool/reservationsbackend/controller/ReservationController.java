@@ -82,10 +82,9 @@ public class ReservationController {
      */
 
 
-
     @PutMapping("/changestatus")
     public void changeReservationStatus(@RequestParam(value = "id") String id, @RequestParam(value = "status") String status) {
-        if (StringUtils.isEmpty(status)){
+        if (StringUtils.isEmpty(status)) {
             return;
         }
         reservationRepository.updateStatus(Status.valueOf(status), Long.parseLong(id));
@@ -98,7 +97,7 @@ public class ReservationController {
             reservationRepository.updateRoom(null, Long.parseLong(reservationId));
         }
 
-        if (!roomId.equals("-") &&!roomId.equals("") &&
+        if (!roomId.equals("-") && !roomId.equals("") &&
                 roomRepository.findAll().stream().anyMatch(room1 -> room1.getId().equals(Long.parseLong(roomId)))) {
             Room room = roomRepository.getOne(Long.parseLong(roomId));
             reservationRepository.updateRoom(room.getId(), Long.parseLong(reservationId));

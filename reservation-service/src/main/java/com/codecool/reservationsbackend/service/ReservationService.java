@@ -6,6 +6,7 @@ import com.codecool.reservationsbackend.repositories.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,9 +57,10 @@ public class ReservationService {
                 .checkIn(dates.get(0))
                 .checkOut(dates.get(1))
                 .hotel(hotel)
-                .price(random.nextDouble() + 20000000)
+                .price(random.nextDouble() + 200)
                 .paymentMethod(PaymentMethod.values()[random.nextInt(PaymentMethod.values().length)])
                 .status(Status.values()[random.nextInt(Status.values().length)])
+                .isCityTaxIncluded(random.nextBoolean())
                 .build();
         return reservation;
 
@@ -89,10 +91,10 @@ public class ReservationService {
 
         List<Room> allRooms = roomRepository.findAll();
         ArrayList<Room> freeRooms = new ArrayList<>();
-            for (Room room:allRooms) {
-                if (!reservedRoomIdes.contains(room.getId())){
-                    freeRooms.add(room);
-                }
+        for (Room room : allRooms) {
+            if (!reservedRoomIdes.contains(room.getId())) {
+                freeRooms.add(room);
+            }
         }
         return freeRooms;
     }
