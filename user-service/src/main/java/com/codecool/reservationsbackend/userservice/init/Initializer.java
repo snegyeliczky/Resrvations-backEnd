@@ -34,6 +34,7 @@ public class Initializer {
 
             // CREATING ADMIN
             if (userRepository.findAll().size() == 0) {
+                System.out.println("Add admin");
                 AppUser adminOfAdmins = AppUser.builder()
                         .username("cezar")
                         .password(passwordEncoder.encode("salata"))

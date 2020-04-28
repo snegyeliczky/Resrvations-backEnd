@@ -73,9 +73,10 @@ public class ReservationService {
         if (reservations != null) {
             for (Reservation reservation : reservations) {
                 if (reservation.getRoomId() != null) {
-                    Room room = roomRepository.getOne(reservation.getRoomId());
-                    if (room != null)
+                    Room room = roomRepository.findRoomById(reservation.getRoomId());
+                    if (availableRooms.contains(room)){
                         availableRooms.remove(room);
+                    }
                 }
             }
         }

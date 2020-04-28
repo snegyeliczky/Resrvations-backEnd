@@ -30,4 +30,5 @@ public class Hotel {
     @OneToMany(mappedBy = "hotel", cascade = CascadeType.MERGE)
     @EqualsAndHashCode.Exclude
     private List<Reservation> reservations = new ArrayList<>();
+
 }

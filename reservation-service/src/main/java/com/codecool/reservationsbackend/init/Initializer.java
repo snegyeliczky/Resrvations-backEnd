@@ -47,7 +47,15 @@ public class Initializer {
     @Bean
     public CommandLineRunner afterInit() {
 
+
         return args -> {
+
+            if (reservationRepository.findByCheckInEquals(LocalDate.now()).size()<1 && hotelRepository.findAll().size()!= 0){
+                Hotel hotel = hotelRepository.getHotelByName("Budapest best Hotel!");
+                List<Reservation> reservations = creatReservationsForToday(hotel);
+                reservationRepository.saveAll(reservations);
+            }
+
             if (hotelRepository.findAll().size() == 0) {
                 Random random = new Random();
                 List<Room> rooms = new ArrayList<>();
@@ -89,7 +97,7 @@ public class Initializer {
                     guests.get(i).setReservations(Arrays.asList(reservations.get(i)));
                 }
 
-                for (int i = 0; i < 4; i++) {
+                /*for (int i = 0; i < 4; i++) {
                     Guest guest = guestService.createRandomGuest();
 
                     Reservation reservation = Reservation.builder()
@@ -106,7 +114,10 @@ public class Initializer {
                     reservation.getGuest().getAddress().setGuest(guest);
                     addRoomToReservation(random, reservations, reservation);
                 }
+                 */
 
+                List<Reservation> reservationsForToday = creatReservationsForToday(hotel);
+                reservations.addAll(reservationsForToday);
 
                 hotel.setReservations(reservations);
                 reservationRepository.saveAll(reservations);
@@ -114,6 +125,31 @@ public class Initializer {
             }
         };
     }
+
+    private List<Reservation> creatReservationsForToday(Hotel hotel){
+        Random random = new Random();
+        List<Reservation> reservations = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            Guest guest = guestService.createRandomGuest();
+
+            Reservation reservation = Reservation.builder()
+                    .checkIn(LocalDate.now())
+                    .checkOut(LocalDate.ofEpochDay(ThreadLocalRandom.current()
+                            .nextLong(LocalDate.now().toEpochDay() + 1,
+                                    LocalDate.now().toEpochDay() + 15)))
+                    .hotel(hotel)
+                    .status(Status.values()[i % 2 == 0 ? 0 : 1])
+                    .guest(guest)
+                    .price((random.nextDouble() + 2000))
+                    .paymentMethod(PaymentMethod.values()[random.nextInt(PaymentMethod.values().length)])
+                    .build();
+            reservation.getGuest().getAddress().setGuest(guest);
+            addRoomToReservation(random, reservations, reservation);
+        }
+
+        return reservations;
+    };
 
     private void addRoomToReservation(Random random, List<Reservation> reservations, Reservation reservation) {
         if (reservation.getStatus().equals(Status.IN)) {
