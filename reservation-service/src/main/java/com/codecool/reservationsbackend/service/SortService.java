@@ -19,7 +19,6 @@ public class SortService {
 
     public List<Reservation> SortReservations(String date, String sort){
         List<Reservation> reservationsByDate = getReservationsByDate(date);
-        System.out.println(reservationsByDate.toString());
         switch (sort){
             case "firstName":
                 System.out.println("firstName");
@@ -28,6 +27,17 @@ public class SortService {
                 return reservationsByDate;
         }
 
+    }
+
+    public List<Reservation> sortAllReservetion(String sort) {
+        List<Reservation> allReservation = getAllReservation();
+        switch (sort){
+            case "firstName":
+                System.out.println("firstName");
+                return sortByName(allReservation);
+            default:
+                return allReservation;
+        }
     }
 
     private List<Reservation> sortByName(List<Reservation> reservationList){
@@ -41,7 +51,12 @@ public class SortService {
         return reservationRepository.findByCheckInEquals(LocalDate.parse(date));
     }
 
-    ;
+
+    private List<Reservation> getAllReservation(){
+        return reservationRepository.findAll();
+    }
+
+
 
 
 }
