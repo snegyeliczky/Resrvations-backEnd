@@ -62,6 +62,7 @@ public class ReservationService {
                 .status(Status.values()[random.nextInt(Status.values().length)])
                 .isCityTaxIncluded(random.nextBoolean())
                 .build();
+
         return reservation;
 
     }
@@ -74,7 +75,7 @@ public class ReservationService {
             for (Reservation reservation : reservations) {
                 if (reservation.getRoomId() != null) {
                     Room room = roomRepository.findRoomById(reservation.getRoomId());
-                    if (availableRooms.contains(room)){
+                    if (availableRooms.contains(room)) {
                         availableRooms.remove(room);
                     }
                 }
