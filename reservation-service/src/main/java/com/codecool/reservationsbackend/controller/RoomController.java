@@ -5,6 +5,7 @@ import com.codecool.reservationsbackend.entity.Room;
 import com.codecool.reservationsbackend.repositories.HotelRepository;
 import com.codecool.reservationsbackend.repositories.RoomRepository;
 import com.codecool.reservationsbackend.service.ReservationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -17,16 +18,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/rooms")
 @Slf4j
+@RequiredArgsConstructor
 public class RoomController {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-    @Autowired
-    private HotelRepository hotelRepository;
+    private final HotelRepository hotelRepository;
 
-    @Autowired
-    private ReservationService reservationService;
+    private final ReservationService reservationService;
 
     @GetMapping("/get-available-room")
     public List<Room> getAvailableRoomsByDates(@RequestParam(value = "checkin") String checkIn,

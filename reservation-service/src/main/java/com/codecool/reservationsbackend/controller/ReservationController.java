@@ -6,6 +6,7 @@ import com.codecool.reservationsbackend.entity.Status;
 import com.codecool.reservationsbackend.repositories.ReservationRepository;
 import com.codecool.reservationsbackend.repositories.RoomRepository;
 import com.codecool.reservationsbackend.service.ReservationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -18,16 +19,14 @@ import java.util.List;
 @Slf4j
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
 public class ReservationController {
 
-    @Autowired
-    private ReservationService reservationService;
+    private final ReservationService reservationService;
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
     @GetMapping("/get-all")
     public List<Reservation> getReservations() {
@@ -41,8 +40,7 @@ public class ReservationController {
 
     @GetMapping("/get-reservation")
     public Reservation getReservationById(@RequestParam(value = "reservationId") String reservationId) {
-        Reservation reservation = reservationRepository.getOne(Long.parseLong(reservationId));
-        return reservation;
+        return reservationRepository.getOne(Long.parseLong(reservationId));
     }
 
     @GetMapping("/checkin")
