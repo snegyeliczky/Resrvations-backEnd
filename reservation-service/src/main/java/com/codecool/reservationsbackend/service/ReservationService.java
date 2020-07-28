@@ -3,8 +3,7 @@ package com.codecool.reservationsbackend.service;
 
 import com.codecool.reservationsbackend.entity.*;
 import com.codecool.reservationsbackend.repositories.*;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,27 +12,22 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class ReservationService {
 
-    @Autowired
-    private AddressRepository addressRepository;
+    private final AddressRepository addressRepository;
 
-    @Autowired
-    private RandomDateCreator randomDateCreator;
+    private final RandomDateCreator randomDateCreator;
 
-    @Autowired
-    private GuestRepository guestRepository;
+    private final GuestRepository guestRepository;
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+    private final ReservationRepository reservationRepository;
 
-    @Autowired
-    private HotelRepository hotelRepository;
+    private final HotelRepository hotelRepository;
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private final RoomRepository roomRepository;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public void addNewReservation(Reservation reservation) {
         Guest guestByEmail = guestRepository.findGuestByEmail(reservation.getGuest().getEmail());
@@ -52,7 +46,7 @@ public class ReservationService {
 
     public Reservation createRandomReservation(Hotel hotel) {
         List<LocalDate> dates = randomDateCreator.dateCreator();
-        Reservation reservation = Reservation.builder()
+        return Reservation.builder()
                 .checkIn(dates.get(0))
                 .checkOut(dates.get(1))
                 .hotel(hotel)
@@ -60,7 +54,6 @@ public class ReservationService {
                 .paymentMethod(PaymentMethod.values()[random.nextInt(PaymentMethod.values().length)])
                 .status(Status.values()[random.nextInt(Status.values().length)])
                 .build();
-        return reservation;
 
     }
 
