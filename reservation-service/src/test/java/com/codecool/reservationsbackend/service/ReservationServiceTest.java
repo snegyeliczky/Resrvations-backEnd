@@ -21,9 +21,6 @@ public class ReservationServiceTest {
     @Autowired
     private ReservationService reservationService;
 
-    @Autowired
-    private HotelRepository hotelRepository;
-
 
     @Test
     public void createRandomReservation() {
@@ -31,8 +28,6 @@ public class ReservationServiceTest {
         Hotel hotel = Hotel.builder()
                 .name("Budapest best Hotel!")
                 .build();
-
-        hotelRepository.save(hotel);
 
         assertThat(reservationService.createRandomReservation(hotel)).isNotNull();
     }
